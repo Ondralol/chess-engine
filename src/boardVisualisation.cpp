@@ -49,27 +49,59 @@ void BoardVisualisation::processInput(sf::Event & event)
         float YSquare = TOP_PADDING + YPos * squareSize;
         
         // Check if mouse is inside the square
-        if (XMouse >= XSquare && XMouse <= XSquare + squareSize && YMouse >= YSquare &&
-            YMouse <= YSquare + squareSize)
+        if (XMouse > XSquare && XMouse < XSquare + squareSize && YMouse > YSquare &&
+            YMouse < YSquare + squareSize)
         {
           m_holding = pos;
         }
 
-       std::cout << "Mouse: (" << XMouse << ", " << YMouse << ", Square (" << XSquare << ", " << YSquare << ")" << std::endl;
+       //std::cout << "Mouse: (" << XMouse << ", " << YMouse << ", Square (" << XSquare << ", " << YSquare << ")" << std::endl;
       }
     }
   }
 
   else if (event.type == sf::Event::MouseButtonReleased)
   {
-    if (event.mouseButton.button == sf::Mouse::Left)
+    if (event.mouseButton.button == sf::Mouse::Left && m_holding.first != -1)
     {
-      std::cout << "Left released" << std::endl;
+      // Raw display coordinates
+      sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
+      // Window coordinates
+      sf::Vector2f windowPos = m_window.mapPixelToCoords(mousePos);
+      float XMouse = windowPos.x;
+      float YMouse = windowPos.y;
+      
+      bool empty = true;
+      // Check if any piece was clicked
+      for (const auto & [pos, piece]: m_pieces)
+      {
+        size_t XPos = pos.first;
+        size_t YPos = (7-pos.second);
+        float XSquare = LEFT_PADDING + XPos * squareSize;
+        float YSquare = TOP_PADDING + YPos * squareSize;
+        
+        // Check if mouse is inside the square
+        if (XMouse > XSquare && XMouse < XSquare + squareSize && YMouse > YSquare &&
+            YMouse < YSquare + squareSize)
+        {
+          empty = false;
+        }
+      }
+      if (empty)
+      {
+        Piece oldPiece = m_pieces[m_holding];
+        int newX = (XMouse - LEFT_PADDING) / squareSize;
+        int newY = 8 - (YMouse - TOP_PADDING) / squareSize;
+        std::cout << newX << " " << newY << std::endl;
+        if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7)
+        {
+          m_pieces.erase(m_holding);
+          m_pieces[{newX, newY}] = oldPiece;
+        }
+      }
       m_holding.first = -1;
     }
   }
-
-
 }
 
 /** The main loop */
