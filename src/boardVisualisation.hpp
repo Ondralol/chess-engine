@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "engine.hpp"
+#include "chess.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -50,6 +50,9 @@ public:
   
   /** Updates position of pieces on the board */
   void updatePieces(std::map<Position, Piece> pieces);
+  
+  /** Shows piece on exact coordinates */
+  void showPieceXY(Piece piece, size_t X, size_t Y);
 
   /** Shows pieces on chess board */
   void showPieces(void);
@@ -63,6 +66,9 @@ private:
   
   // Current pieces
   std::map<Position, Piece> m_pieces;
+  
+  // Currently holding piece - (-1, -1) means that no piece is being held
+  Position m_holding = {-1, -1};
 
   std::unordered_map<std::string, std::shared_ptr<sf::Texture>> m_textureCache;
   sf::Font m_font;

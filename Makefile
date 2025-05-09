@@ -11,7 +11,7 @@ SFML_LIBS = -lsfml-window -lsfml-graphics -lsfml-system
 
 all: main doxygen
 
-main: $(SOURCE)/main.o $(SOURCE)/boardVisualisation.o $(SOURCE)/engine.o
+main: $(SOURCE)/main.o $(SOURCE)/boardVisualisation.o $(SOURCE)/chess.o $(SOURCE)/engine.o
 	$(LD) $(CFLAGS) -o $@ $^ -L$(SFML_LIB) $(SFML_LIBS) 
 
 %.o: $(SOURCE)/%.cpp

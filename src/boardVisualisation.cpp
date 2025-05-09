@@ -18,6 +18,9 @@
 /** Processes all user input */
 void BoardVisualisation::processInput(sf::Event & event)
 {
+  unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
+  float squareSize = (smallerWinSize - 75) / DIMENSION;
+
   /* Close window if window is closed */
   if (event.type == sf::Event::Closed)
     m_window.close();
@@ -26,12 +29,55 @@ void BoardVisualisation::processInput(sf::Event & event)
   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     m_window.close();
 
+  else if (event.type == sf::Event::MouseButtonPressed)
+  {
+    if (event.mouseButton.button == sf::Mouse::Left)
+    {
+      // Raw display coordinates
+      sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
+      // Window coordinates
+      sf::Vector2f windowPos = m_window.mapPixelToCoords(mousePos);
+      float XMouse = windowPos.x;
+      float YMouse = windowPos.y;
+      
+      // Check if any piece was clicked
+      for (const auto & [pos, piece]: m_pieces)
+      {
+        size_t XPos = pos.first;
+        size_t YPos = (7-pos.second);
+        float XSquare = LEFT_PADDING + XPos * squareSize;
+        float YSquare = TOP_PADDING + YPos * squareSize;
+        
+        // Check if mouse is inside the square
+        if (XMouse >= XSquare && XMouse <= XSquare + squareSize && YMouse >= YSquare &&
+            YMouse <= YSquare + squareSize)
+        {
+          m_holding = pos;
+        }
+
+       std::cout << "Mouse: (" << XMouse << ", " << YMouse << ", Square (" << XSquare << ", " << YSquare << ")" << std::endl;
+      }
+    }
+  }
+
+  else if (event.type == sf::Event::MouseButtonReleased)
+  {
+    if (event.mouseButton.button == sf::Mouse::Left)
+    {
+      std::cout << "Left released" << std::endl;
+      m_holding.first = -1;
+    }
+  }
+
+
 }
 
 /** The main loop */
 void BoardVisualisation::mainLoop(void)
 {
   m_startTime = std::chrono::high_resolution_clock::now();
+  unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
+  float squareSize = (smallerWinSize - 75) / DIMENSION;
 
   sf::Event event;
   sf::Clock clock;
@@ -44,9 +90,21 @@ void BoardVisualisation::mainLoop(void)
     }
 
     m_window.clear(sf::Color(39,36,33,255));
-
+    
     showBoard();
-
+    
+    // If currently holding
+    if (m_holding.first != -1)
+    {
+      // Raw display coordinates
+      sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
+      
+      // Window coordinates
+      sf::Vector2f windowPos = m_window.mapPixelToCoords(mousePos);
+      
+      // Displays the piece on the cursour (-squareSize to adjust from offset - displaying from top left corner, not middle)
+      this -> showPieceXY(m_pieces[m_holding], windowPos.x - squareSize / 2, windowPos.y - squareSize / 2);
+    }
     m_window.display();
 
   }
@@ -72,16 +130,14 @@ void BoardVisualisation::updatePieces(std::map<Position, Piece> pieces)
   m_pieces = pieces;
 }
 
-/** Displays pieces on chess board */
-void BoardVisualisation::showPieces(void)
+/** Shows piece on exact coordinates */
+void BoardVisualisation::showPieceXY(Piece piece, size_t X, size_t Y)
 {
   unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
   float squareSize = (smallerWinSize - 75) / DIMENSION;
-  std::shared_ptr<sf::Texture> texture;
 
-  for (auto &[pos, piece]: m_pieces)
-  {
-    if (piece.color == Color::White)
+  std::shared_ptr<sf::Texture> texture;
+  if (piece.color == Color::White)
     {
       switch(piece.type)
       {
@@ -144,12 +200,26 @@ void BoardVisualisation::showPieces(void)
     sf::Sprite sprite;
     sprite = sf::Sprite(*texture);
     sprite.setScale(squareSize / texture -> getSize().x, squareSize / texture -> getSize().y);
+    sprite.setPosition(X, Y);
+    m_window.draw(sprite);
+}
+
+
+/** Displays pieces on chess board */
+void BoardVisualisation::showPieces(void)
+{
+  unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
+  float squareSize = (smallerWinSize - 75) / DIMENSION;
+
+  for (auto &[pos, piece]: m_pieces)
+  {
+    // Dont display the piece that is being held
+    if (pos.first == m_holding.first && pos.second == m_holding.second)
+      continue;
+
     size_t XPos = pos.first;
     size_t YPos = (7-pos.second);
-
-    sprite.setPosition(LEFT_PADDING + XPos * squareSize, TOP_PADDING + YPos * squareSize);
-    m_window.draw(sprite);
-
+    this -> showPieceXY(piece, LEFT_PADDING + XPos * squareSize, TOP_PADDING + YPos * squareSize);
   }
   
 }
@@ -195,7 +265,7 @@ void BoardVisualisation::showBoard(void)
 
       X += squareSize;
     }
-
+    
     Y += squareSize;
     X = LEFT_PADDING;
 

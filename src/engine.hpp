@@ -7,30 +7,6 @@
 
 #pragma once
 
-#include <utility>
-#include <cstddef> 
+#include "chess.hpp"
 
-// Position on chess board
-using Position = std::pair<size_t, size_t>;
 
-enum class Color
-{
-  White, 
-  Black
-};
-
-enum class PieceType
-{
-  King,
-  Queen,
-  Rook,
-  Bishop,
-  Knight,
-  Pawn,
-};
-
-struct Piece
-{
-  Color color;
-  PieceType type;
-};
