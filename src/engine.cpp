@@ -24,22 +24,22 @@ std::pair<Position, Position> Engine::findBestMove(Chess game, int depth)
 
   Color player = game.toMove();
   int bestScore = (player == Color::White) ? INT_MIN : INT_MAX;
-
-  std::pair<Position, Position> bestMove;
+  std::pair<Position, Position> bestMove = moves[0]; // default move
+  
   for (const auto & [from, to]: moves)
   {
     Chess copy = game;
     copy.makeMove(from, to);
-    int score = minimax(copy, depth -1, 1e9, 1e9, player == Color::Black);
+    int score = minimax(copy, depth -1, INT_MIN, INT_MAX, player == Color::Black);
 
-    if ((player == Color::White && score > bestScore) || (player == Color::Black && score < bestScore))
+    if ((player == Color::White && score > bestScore) || 
+        (player == Color::Black && score < bestScore))
     {
       bestScore = score;
       bestMove = {from, to};
     }
   }
   
-  std::cout << "best move:" << bestMove.first.first << " " << bestMove.first.second << std::endl;
   return bestMove;
 }
  
@@ -47,15 +47,22 @@ std::pair<Position, Position> Engine::findBestMove(Chess game, int depth)
 int Engine::minimax(Chess game, int depth, int alpha, int beta, bool maximizingPlayer)
 {
   if (depth == 0)
+  {  
     return game.evaluate(Color::White) - game.evaluate(Color::Black);
-  
+  }
+
   std::vector<std::pair<Position, Position>> moves = game.findMoves();
   if (moves.empty())
-    return game.evaluate(Color::White) - game.evaluate(Color::Black);
-  
+  {
+    if (maximizingPlayer)
+      return INT_MIN + 1;
+    else
+      return INT_MAX - 1;
+  }
+
   if (maximizingPlayer)
   {
-    int maxEval = -1e9;
+    int maxEval = INT_MIN;
     for (const auto & [from, to]: moves)
     {
       Chess copy = game;
@@ -71,7 +78,7 @@ int Engine::minimax(Chess game, int depth, int alpha, int beta, bool maximizingP
   
   else
   {
-    int minEval = 1e9;
+    int minEval = INT_MAX;
     for (const auto & [from, to]: moves)
     {
       Chess copy = game;

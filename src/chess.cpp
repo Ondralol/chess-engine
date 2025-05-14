@@ -99,7 +99,7 @@ std::map<Position, Piece> Chess::simpleSetup()
   pieces[{5,6}] = piece;
   
   piece.type = PieceType::Rook;
-  pieces[{6,6}] = piece;
+  //pieces[{6,6}] = piece;
 
   return pieces;
 }
@@ -391,7 +391,6 @@ bool Chess::isValidMove(Position pos1, Position pos2)
 // Why is this bool?
 bool Chess::makeMove(Position pos1, Position pos2)
 {
-  std::cout << "From : " << pos1.first << " " << pos1.second << ", To: " << pos2.first << " " << pos2.second << std::endl;
   Piece piece = m_pieces[pos1];
   m_pieces.erase(pos1);
   m_pieces[pos2] = piece;
@@ -402,7 +401,6 @@ bool Chess::makeMove(Position pos1, Position pos2)
   else
     m_toMove = Color::White;
   
-  std::cout << m_pieces.size() << std::endl;
   return true;
 }
 
@@ -443,7 +441,7 @@ size_t Chess::evaluate(Color color)
           break;
           
          case PieceType::King:
-          value += 99999;
+          value += 0;
           break;
       }
     }

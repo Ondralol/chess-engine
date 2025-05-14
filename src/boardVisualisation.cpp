@@ -17,6 +17,7 @@
 #include <mutex>
 #include <thread>
 #include <atomic>
+#include <future>
 
 /** Processes all user input */
 void BoardVisualisation::processInput(sf::Event & event)
@@ -117,7 +118,34 @@ void BoardVisualisation::mainLoop(void)
     m_window.clear(sf::Color(39,36,33,255));
     
     showBoard();
-
+    
+    // If black plays, let AI make move
+    if (m_chess.toMove() == Color::White)
+    {
+      if (!bestMoveFuture.valid()) // If no current calculation is running
+      {
+        std::cout << "Making move (AI - White)..." << std::endl;
+        // Launch findBestMove in a separate thread
+        bestMoveFuture = std::async(std::launch::async, &Engine::findBestMove, &engine, std::ref(m_chess), 25);
+      }
+      else
+      {
+        // Check if the AI has finished calculating the move
+        std::chrono::seconds timeout(0);
+        if (bestMoveFuture.wait_for(timeout) == std::future_status::ready)
+        {
+          std::cout << "Move ready" << std::endl;
+          auto move = bestMoveFuture.get();
+          if (move.first != Position(-1, -1))
+          {
+            m_chess.makeMove(move.first, move.second);
+          }
+          // Reset the future so the AI can calculate the next move
+          bestMoveFuture = std::future<std::pair<Position, Position>>();
+        }
+      }
+    }
+    /*
     // If black plays, let AI make move
     if (m_chess.toMove() == Color::White)
     {
@@ -128,7 +156,7 @@ void BoardVisualisation::mainLoop(void)
         m_chess.makeMove(move.first, move.second);
       else
         std::cout << "No possible moves" << std::endl;
-    }
+    }*/
   
     // If currently holding
     if (m_holding.first != -1)
