@@ -17,6 +17,8 @@
 // Position on chess board
 using Position = std::pair<int, int>;
 
+#define BOARD_SIZE 8
+
 constexpr std::array<Position, 8> KING_MOVES = {{
   {-1,1}, {0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}
 }};
@@ -83,13 +85,13 @@ class Chess
     std::vector<std::pair<Position, Position>> findMoves();
     
     /** Validates move for pawn */
-    static bool isValidPawnMove(std::map<Position, Piece> pieces, Position pos1, Position pos2);
+    static bool isValidPawnMove(std::map<Position, Piece> & pieces, Position pos1, Position pos2);
   
     /** Validates move for king */
-    static bool isValidKingMove(std::map<Position, Piece> pieces, Position pos1, Position pos2);
+    static bool isValidKingMove(std::map<Position, Piece> & pieces, Position pos1, Position pos2);
   
     /** Validates move for Rook */
-    static bool isValidRookMove(std::map<Position, Piece> pieces, Position pos1, Position pos2);
+    static bool isValidRookMove(std::map<Position, Piece> & pieces, Position pos1, Position pos2);
 
     /** Checks if move is valid */
     bool isValidMove(Position pos1, Position pos2);

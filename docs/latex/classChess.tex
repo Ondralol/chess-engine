@@ -34,11 +34,11 @@ static std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93
 \item 
 static std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \mbox{\hyperlink{classChess_ae5ba00e667689ec0da0318f8f768d7ad}{simple\+Setup}} (void)
 \item 
-static bool \mbox{\hyperlink{classChess_a6e03324e23e6434d57e14a1f2bb19eed}{is\+Valid\+Pawn\+Move}} (std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ pieces, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
+static bool \mbox{\hyperlink{classChess_a6991477726495aff55dec09b54f7391a}{is\+Valid\+Pawn\+Move}} (std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&pieces, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
 \item 
-static bool \mbox{\hyperlink{classChess_a958aa4b2c018a1fe986a02b836ce67b3}{is\+Valid\+King\+Move}} (std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ pieces, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
+static bool \mbox{\hyperlink{classChess_a960d62e7581ce492f28b03f4a4b49a82}{is\+Valid\+King\+Move}} (std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&pieces, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
 \item 
-static bool \mbox{\hyperlink{classChess_a79d0a2fc6ff16f4fcec10d89710a0e9d}{is\+Valid\+Rook\+Move}} (std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ pieces, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
+static bool \mbox{\hyperlink{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}{is\+Valid\+Rook\+Move}} (std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&pieces, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
 \end{DoxyCompactItemize}
 
 
@@ -88,11 +88,11 @@ Returns current state of board \mbox{\Hypertarget{classChess_a3ac627bf7eff54056d
 
 Check if the move does not put your own king at check
 
-Check if the move does not put your own king at check, expects valid move on input \mbox{\Hypertarget{classChess_a958aa4b2c018a1fe986a02b836ce67b3}\label{classChess_a958aa4b2c018a1fe986a02b836ce67b3}} 
+Check if the move does not put your own king at check, expects valid move on input \mbox{\Hypertarget{classChess_a960d62e7581ce492f28b03f4a4b49a82}\label{classChess_a960d62e7581ce492f28b03f4a4b49a82}} 
 \index{Chess@{Chess}!isValidKingMove@{isValidKingMove}}
 \index{isValidKingMove@{isValidKingMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidKingMove()}{isValidKingMove()}}
-{\footnotesize\ttfamily bool Chess\+::is\+Valid\+King\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily bool Chess\+::is\+Valid\+King\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 Validates move for king \mbox{\Hypertarget{classChess_a5c3e9abd6ce64b878629a8a68abbfe80}\label{classChess_a5c3e9abd6ce64b878629a8a68abbfe80}} 
 \index{Chess@{Chess}!isValidMove@{isValidMove}}
@@ -100,17 +100,17 @@ Validates move for king \mbox{\Hypertarget{classChess_a5c3e9abd6ce64b878629a8a68
 \doxysubsubsection{\texorpdfstring{isValidMove()}{isValidMove()}}
 {\footnotesize\ttfamily bool Chess\+::is\+Valid\+Move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})}
 
-Checks if move is valid \mbox{\Hypertarget{classChess_a6e03324e23e6434d57e14a1f2bb19eed}\label{classChess_a6e03324e23e6434d57e14a1f2bb19eed}} 
+Checks if move is valid \mbox{\Hypertarget{classChess_a6991477726495aff55dec09b54f7391a}\label{classChess_a6991477726495aff55dec09b54f7391a}} 
 \index{Chess@{Chess}!isValidPawnMove@{isValidPawnMove}}
 \index{isValidPawnMove@{isValidPawnMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidPawnMove()}{isValidPawnMove()}}
-{\footnotesize\ttfamily bool Chess\+::is\+Valid\+Pawn\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily bool Chess\+::is\+Valid\+Pawn\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Validates move for pawn \mbox{\Hypertarget{classChess_a79d0a2fc6ff16f4fcec10d89710a0e9d}\label{classChess_a79d0a2fc6ff16f4fcec10d89710a0e9d}} 
+Validates move for pawn \mbox{\Hypertarget{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}\label{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}} 
 \index{Chess@{Chess}!isValidRookMove@{isValidRookMove}}
 \index{isValidRookMove@{isValidRookMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidRookMove()}{isValidRookMove()}}
-{\footnotesize\ttfamily bool Chess\+::is\+Valid\+Rook\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily bool Chess\+::is\+Valid\+Rook\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 Validates move for Rook \mbox{\Hypertarget{classChess_ad073a7fff8ca060d49df67aa7810a684}\label{classChess_ad073a7fff8ca060d49df67aa7810a684}} 
 \index{Chess@{Chess}!makeMove@{makeMove}}

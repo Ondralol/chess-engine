@@ -92,6 +92,8 @@ std::map<Position, Piece> Chess::simpleSetup()
   pieces[{4,0}] = piece;
   piece.type = PieceType::Rook;
   pieces[{3,1}] = piece;
+  pieces[{3,2}] = piece;
+  //pieces[{3,3}] = piece;
 
 
   piece.color = Color::Black;
@@ -99,7 +101,7 @@ std::map<Position, Piece> Chess::simpleSetup()
   pieces[{5,6}] = piece;
   
   piece.type = PieceType::Rook;
-  //pieces[{6,6}] = piece;
+  pieces[{6,6}] = piece;
 
   return pieces;
 }
@@ -229,7 +231,7 @@ std::vector<std::pair<Position, Position>> Chess::findMoves()
 
 /** Validates move for pawn */
 // TODO en passant, upgrade
-bool Chess::isValidPawnMove(std::map<Position, Piece> pieces, Position pos1, Position pos2)
+bool Chess::isValidPawnMove(std::map<Position, Piece> & pieces, Position pos1, Position pos2)
 {
   Piece piece1 = pieces[pos1];
   
@@ -284,7 +286,7 @@ bool Chess::isValidPawnMove(std::map<Position, Piece> pieces, Position pos1, Pos
 
 /** Validates move for king */
 // TODO Castling
-bool Chess::isValidKingMove(std::map<Position, Piece> pieces, Position pos1, Position pos2)
+bool Chess::isValidKingMove(std::map<Position, Piece> & pieces, Position pos1, Position pos2)
 {
   if (std::abs(pos1.first - pos2.first) <= 1 && std::abs(pos1.second - pos2.second) <= 1)
   {
@@ -299,7 +301,7 @@ bool Chess::isValidKingMove(std::map<Position, Piece> pieces, Position pos1, Pos
 }
 
 /** Validates move for Rook */
-bool Chess::isValidRookMove(std::map<Position, Piece> pieces, Position pos1, Position pos2)
+bool Chess::isValidRookMove(std::map<Position, Piece> & pieces, Position pos1, Position pos2)
 {
   // Check if the move is vertical
   if (pos1.first == pos2.first)

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['top_5fpadding_132',['TOP_PADDING',['../boardVisualisation_8hpp.html#aa4ddbe0e68c830fd6a97867cb875420f',1,'boardVisualisation.hpp']]],
-  ['top_5fpadding_5fgraph_133',['TOP_PADDING_GRAPH',['../boardVisualisation_8hpp.html#a64736be90458d1b897638085a2d142e7',1,'boardVisualisation.hpp']]],
-  ['top_5fpadding_5ftext_134',['TOP_PADDING_TEXT',['../boardVisualisation_8hpp.html#a3a743d9fd32540fd8fb80f943df99230',1,'boardVisualisation.hpp']]]
+  ['left_5fpadding_131',['LEFT_PADDING',['../boardVisualisation_8hpp.html#a160ffde5332affbb5e6f3fb1b3148972',1,'boardVisualisation.hpp']]],
+  ['left_5fpadding_5fgraph_132',['LEFT_PADDING_GRAPH',['../boardVisualisation_8hpp.html#af5fcb4d34953c8f969eda439b422a202',1,'boardVisualisation.hpp']]],
+  ['left_5fpadding_5ftext_133',['LEFT_PADDING_TEXT',['../boardVisualisation_8hpp.html#a8ac20e794d3eb2907feccba530713ef1',1,'boardVisualisation.hpp']]]
 ];
