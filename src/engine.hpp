@@ -20,6 +20,6 @@ class Engine
   private:
     
     /** Minimax algorithm to find the best move */
-    int minimax(Chess game, int depth, int alpha, int beta, bool maximizingPlayer);
+    int minimax(Chess & game, int depth, int alpha, int beta, bool maximizingPlayer);
 };
 

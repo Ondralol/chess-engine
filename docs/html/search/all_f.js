@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['white_56',['White',['../chess_8hpp.html#ab87bacfdad76e61b9412d7124be44c1ca25a81701fbfa4a1efdf660a950c1d006',1,'chess.hpp']]]
+  ['undo_63',['undo',['../classChess.html#a696ee05988698bda56959858045b5816',1,'Chess']]]
 ];

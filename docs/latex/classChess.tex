@@ -19,9 +19,13 @@ bool \mbox{\hyperlink{classChess_a5c3e9abd6ce64b878629a8a68abbfe80}{is\+Valid\+M
 \item 
 bool \mbox{\hyperlink{classChess_ad073a7fff8ca060d49df67aa7810a684}{make\+Move}} (\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
 \item 
-\mbox{\hyperlink{chess_8hpp_ab87bacfdad76e61b9412d7124be44c1c}{Color}} \mbox{\hyperlink{classChess_af7bca39d794df32ac32db8ce17976d5a}{to\+Move}} ()
+\mbox{\hyperlink{chess_8hpp_ab87bacfdad76e61b9412d7124be44c1c}{Color}} \mbox{\hyperlink{classChess_a021042797226bdbcf2ed5183bb9a3962}{to\+Move}} (void)
 \item 
 size\+\_\+t \mbox{\hyperlink{classChess_aa97302ddda37e2a3f5d6ebb2d5d0b5fc}{evaluate}} (\mbox{\hyperlink{chess_8hpp_ab87bacfdad76e61b9412d7124be44c1c}{Color}} color)
+\item 
+int \mbox{\hyperlink{classChess_aad507eb2e72278cb023f46255f72f67e}{fast\+Eval}} ()
+\item 
+void \mbox{\hyperlink{classChess_a696ee05988698bda56959858045b5816}{undo}} (void)
 \end{DoxyCompactItemize}
 \doxysubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -56,7 +60,13 @@ Constructor white is botton player, black is bottom player
 
 Returns value (1 = white, 0 = black player
 
-Returns value (0 = white, 1 = black player \mbox{\Hypertarget{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}\label{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}} 
+Returns value (0 = white, 1 = black player \mbox{\Hypertarget{classChess_aad507eb2e72278cb023f46255f72f67e}\label{classChess_aad507eb2e72278cb023f46255f72f67e}} 
+\index{Chess@{Chess}!fastEval@{fastEval}}
+\index{fastEval@{fastEval}!Chess@{Chess}}
+\doxysubsubsection{\texorpdfstring{fastEval()}{fastEval()}}
+{\footnotesize\ttfamily int Chess\+::fast\+Eval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Returns white -\/ black evaluation \mbox{\Hypertarget{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}\label{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}} 
 \index{Chess@{Chess}!findMoves@{findMoves}}
 \index{findMoves@{findMoves}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{findMoves()}{findMoves()}}
@@ -120,13 +130,19 @@ Sets up default position for white player being at bottom \mbox{\Hypertarget{cla
 \doxysubsubsection{\texorpdfstring{simpleSetup()}{simpleSetup()}}
 {\footnotesize\ttfamily std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ Chess\+::simple\+Setup (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Simple board setup (for showcase and testing \mbox{\Hypertarget{classChess_af7bca39d794df32ac32db8ce17976d5a}\label{classChess_af7bca39d794df32ac32db8ce17976d5a}} 
+Simple board setup (for showcase and testing \mbox{\Hypertarget{classChess_a021042797226bdbcf2ed5183bb9a3962}\label{classChess_a021042797226bdbcf2ed5183bb9a3962}} 
 \index{Chess@{Chess}!toMove@{toMove}}
 \index{toMove@{toMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{toMove()}{toMove()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{chess_8hpp_ab87bacfdad76e61b9412d7124be44c1c}{Color}} Chess\+::to\+Move (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{chess_8hpp_ab87bacfdad76e61b9412d7124be44c1c}{Color}} Chess\+::to\+Move (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
-Returns color of player that is about to move 
+Returns color of player that is about to move \mbox{\Hypertarget{classChess_a696ee05988698bda56959858045b5816}\label{classChess_a696ee05988698bda56959858045b5816}} 
+\index{Chess@{Chess}!undo@{undo}}
+\index{undo@{undo}!Chess@{Chess}}
+\doxysubsubsection{\texorpdfstring{undo()}{undo()}}
+{\footnotesize\ttfamily void Chess\+::undo (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Undo the last move 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 

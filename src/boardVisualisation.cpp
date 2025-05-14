@@ -126,7 +126,7 @@ void BoardVisualisation::mainLoop(void)
       {
         std::cout << "Making move (AI - White)..." << std::endl;
         // Launch findBestMove in a separate thread
-        bestMoveFuture = std::async(std::launch::async, &Engine::findBestMove, &engine, std::ref(m_chess), 25);
+        bestMoveFuture = std::async(std::launch::async, &Engine::findBestMove, &engine, std::ref(m_chess), 10);
       }
       else
       {

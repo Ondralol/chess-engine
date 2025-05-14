@@ -392,6 +392,15 @@ bool Chess::isValidMove(Position pos1, Position pos2)
 bool Chess::makeMove(Position pos1, Position pos2)
 {
   Piece piece = m_pieces[pos1];
+  
+  // Default value
+  Piece capturedPiece;
+  capturedPiece.type = PieceType::Empty;
+
+  if (m_pieces.find(pos2) != m_pieces.end())
+    capturedPiece = m_pieces[pos2];
+
+
   m_pieces.erase(pos1);
   m_pieces[pos2] = piece;
 
@@ -401,7 +410,37 @@ bool Chess::makeMove(Position pos1, Position pos2)
   else
     m_toMove = Color::White;
   
+  // Save move to the log
+  Move move;
+  move.from = pos1;
+  move.to = pos2;
+  move.movedPiece = piece;
+  move.capturedPiece = capturedPiece;
+  move.wasFirstMove = false;
+
+  m_moveLog.push(move);
+
   return true;
+}
+
+/** Undo the last move */
+void Chess::undo()
+{
+  Move move = m_moveLog.top();
+  m_moveLog.pop();
+
+  m_pieces.erase(move.to);
+  m_pieces[move.from] = move.movedPiece;
+
+  // If captured piece was no empty
+  if (move.capturedPiece.type != PieceType::Empty)
+    m_pieces[move.to] = move.capturedPiece;
+  
+  // Revert whose turn it is
+  if (m_toMove == Color::White)
+    m_toMove = Color::Black;
+  else
+    m_toMove = Color::White;
 }
 
 /** Returns color of player that is about to move */
@@ -450,4 +489,46 @@ size_t Chess::evaluate(Color color)
   return value;
 }
 
+/** Returns white - black evaluation */
+int Chess::fastEval()
+{
+  int value = 0;
+  for (const auto & [pos, piece]: m_pieces)
+  {
+    int tmpVal = 0;
+    switch (piece.type)
+    {
+      case PieceType::Pawn:
+        tmpVal += 1;
+        break;
+        
+      case PieceType::Knight:
+        tmpVal += 3;
+        break;
+        
+      case PieceType::Bishop:
+        tmpVal += 3;
+        break;
+
+      case PieceType::Rook:
+        tmpVal += 5;
+        break;
+
+       case PieceType::Queen:
+        tmpVal += 9;
+        break;
+          
+       case PieceType::King:
+        tmpVal += 0;
+        break;
+    }
+    
+    if (piece.color == Color::White)
+      value += tmpVal;
+    else
+      value -= tmpVal;
+  }
+
+  return value;
+}
 

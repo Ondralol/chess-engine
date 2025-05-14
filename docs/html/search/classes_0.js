@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boardvisualisation_57',['BoardVisualisation',['../classBoardVisualisation.html',1,'']]]
+  ['boardvisualisation_66',['BoardVisualisation',['../classBoardVisualisation.html',1,'']]]
 ];

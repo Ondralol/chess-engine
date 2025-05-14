@@ -12,6 +12,7 @@
 #include <map>
 #include <vector>
 #include <array>
+#include <stack>
 
 // Position on chess board
 using Position = std::pair<int, int>;
@@ -38,6 +39,7 @@ enum class PieceType
   Bishop,
   Knight,
   Pawn,
+  Empty
 };
 
 struct Piece
@@ -46,6 +48,14 @@ struct Piece
   PieceType type;
 };
 
+struct Move
+{
+  Position from;
+  Position to;
+  Piece movedPiece;
+  Piece capturedPiece;
+  bool wasFirstMove;
+};
 
 /* White player is the botom player in this representation, position (0,0) represents bottom left corner of the board */
 /* First coordinate represents X Axis, second coordinate represents Y Axis */
@@ -88,16 +98,24 @@ class Chess
     bool makeMove(Position pos1, Position pos2);
     
     /** Returns color of player that is about to move */
-    Color toMove();
+    Color toMove(void);
 
     /** Returns value (1 = white, 0 = black player */
     size_t evaluate(Color color);
     
+    /** Returns white - black evaluation */
+    int fastEval();
+    
+    /** Undo the last move */
+    void undo(void);
+
   private:
     
     // Current state of the board                                                                                             
     std::map<Position, Piece> m_pieces;
- 
+    
+    std::stack<Move> m_moveLog;
+
     // Who is to move
     Color m_toMove;
 };

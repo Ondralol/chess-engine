@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_96',['type',['../structPiece.html#ab8f29312ab7939c96ff03f1fb8957d1c',1,'Piece']]]
+  ['movedpiece_109',['movedPiece',['../structMove.html#aa2b5aff96b1d027b127d7c88c1aefc7c',1,'Move']]]
 ];

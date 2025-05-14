@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['white_107',['White',['../chess_8hpp.html#ab87bacfdad76e61b9412d7124be44c1ca25a81701fbfa4a1efdf660a950c1d006',1,'chess.hpp']]]
+  ['rook_124',['Rook',['../chess_8hpp.html#a12ed9719bbdf7bc596ff7a6f4bf3f021a1a415f5ae0f891e49d34821a896b4466',1,'chess.hpp']]]
 ];

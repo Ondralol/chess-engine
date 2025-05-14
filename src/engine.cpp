@@ -28,9 +28,9 @@ std::pair<Position, Position> Engine::findBestMove(Chess game, int depth)
   
   for (const auto & [from, to]: moves)
   {
-    Chess copy = game;
-    copy.makeMove(from, to);
-    int score = minimax(copy, depth -1, INT_MIN, INT_MAX, player == Color::Black);
+    game.makeMove(from, to);
+    int score = minimax(game, depth -1, INT_MIN, INT_MAX, player == Color::Black);
+    game.undo();
 
     if ((player == Color::White && score > bestScore) || 
         (player == Color::Black && score < bestScore))
@@ -44,11 +44,11 @@ std::pair<Position, Position> Engine::findBestMove(Chess game, int depth)
 }
  
 /** Minimax algorithm to find the best move */
-int Engine::minimax(Chess game, int depth, int alpha, int beta, bool maximizingPlayer)
+int Engine::minimax(Chess & game, int depth, int alpha, int beta, bool maximizingPlayer)
 {
   if (depth == 0)
   {  
-    return game.evaluate(Color::White) - game.evaluate(Color::Black);
+    return game.fastEval();
   }
 
   std::vector<std::pair<Position, Position>> moves = game.findMoves();
@@ -65,9 +65,9 @@ int Engine::minimax(Chess game, int depth, int alpha, int beta, bool maximizingP
     int maxEval = INT_MIN;
     for (const auto & [from, to]: moves)
     {
-      Chess copy = game;
-      copy.makeMove(from, to);
-      int eval = minimax(copy, depth -1, alpha, beta, false);
+      game.makeMove(from, to);
+      int eval = minimax(game, depth -1, alpha, beta, false);
+      game.undo();
       maxEval = std::max(maxEval, eval);
       alpha = std::max(alpha, eval);
       if (beta <= alpha)
@@ -81,9 +81,9 @@ int Engine::minimax(Chess game, int depth, int alpha, int beta, bool maximizingP
     int minEval = INT_MAX;
     for (const auto & [from, to]: moves)
     {
-      Chess copy = game;
-      copy.makeMove(from, to);
-      int eval = minimax(copy, depth -1, alpha, beta, true);
+      game.makeMove(from, to);
+      int eval = minimax(game, depth -1, alpha, beta, true);
+      game.undo();
       minEval = std::min(minEval, eval);
       beta = std::min(beta, eval);
       if (beta <= alpha)
