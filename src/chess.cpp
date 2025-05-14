@@ -7,8 +7,11 @@
 
 #include "chess.hpp"
 
+#include <cmath>
+#include <iostream>
+
 /** Sets up default position for white player being at bottom */
-std::map<Position, Piece> Chess::setupWhite(void)
+std::map<Position, Piece> Chess::setup(void)
 {
   std::map<Position, Piece> pieces;
   Piece piece;
@@ -78,90 +81,323 @@ std::map<Position, Piece> Chess::setupWhite(void)
   return pieces;
 }
 
-/** Sets up default position for black player being at bottom */
-std::map<Position, Piece> Chess::setupBlack(void)
+/** Simple board setup (for showcase and testing */
+std::map<Position, Piece> Chess::simpleSetup()
 {
-   std::map<Position, Piece> pieces;
-   Piece piece;
-
-  /* Black pieces */
-  piece.color = Color::Black;
+  std::map<Position, Piece> pieces;
+  Piece piece;
   
-  // Rook
-  piece.type = PieceType::Rook;
-  pieces[{0,0}] =  piece;
-  pieces[{7,0}] =  piece;
-  
-  // Knight
-  piece.type = PieceType::Knight;
-  pieces[{1,0}] =  piece;
-  pieces[{6,0}] =  piece;
-  
-  // Bishop
-  piece.type = PieceType::Bishop;
-  pieces[{2,0}] =  piece;
-  pieces[{5,0}] =  piece;
-  
-  // Queen
-  piece.type = PieceType::Queen;
-  pieces[{4,0}] =  piece;
-  
-  // King
   piece.type = PieceType::King;
-  pieces[{3,0}] =  piece;
-  
-  // Pawns
-  piece.type = PieceType::Pawn;
-  for (int i = 0; i < 8; i ++)
-    pieces[{i,1}] = piece;
-  
-  /* White pieces */
   piece.color = Color::White;
-  
-  // Rook
+  pieces[{4,0}] = piece;
   piece.type = PieceType::Rook;
-  pieces[{0,7}] =  piece;
-  pieces[{7,7}] =  piece;
-  
-  // Knight
-  piece.type = PieceType::Knight;
-  pieces[{1,7}] =  piece;
-  pieces[{6,7}] =  piece;
-  
-  // Bishop
-  piece.type = PieceType::Bishop;
-  pieces[{2,7}] =  piece;
-  pieces[{5,7}] =  piece;
-  
-  // Queen
-  piece.type = PieceType::Queen;
-  pieces[{4,7}] =  piece;
-  
-  // King
+  pieces[{3,1}] = piece;
+
+
+  piece.color = Color::Black;
   piece.type = PieceType::King;
-  pieces[{3,7}] =  piece;
-  
-  // Pawns
-  piece.type = PieceType::Pawn;
-  for (int i = 0; i < 8; i ++)
-    pieces[{i,6}] = piece;
+  pieces[{5,6}] = piece;
   
   return pieces;
 }
 
 
-Chess::Chess(Color color)
+Chess::Chess()
 {
-  m_bottomPlayer = color;
-  Piece piece;
+  //m_pieces = this -> setup();
+  m_pieces = this -> simpleSetup();
+}
 
-  /* Sets default position for white to start and be at the bottom */
-  if (color == Color::White)
-    m_pieces = this -> setupWhite();
 
-  /* Sets default position for white to start and be at the bottom */
+/** Check if the move does not put your own king at check, expects valid move on input */
+// NOTE: Not checking if new pos is not out of range, but it should not matter considering what type of operations I do here
+bool Chess::isCheck(Position pos1, Position pos2)
+{
+  // Simulate move
+  std::map<Position, Piece> piecesCopy = m_pieces;
+  
+  Piece piece = piecesCopy[pos1];
+  piecesCopy.erase(pos1); // What if I erase the enemy king?
+  piecesCopy[pos2] = piece;
+  
+  Position kingPos;
+  bool found = false;
+  // Find king position
+  for (int i = 0; i < 8 && !found; i ++)
+  {
+    for (int j = 0; j < 8 && !found; j ++)
+      if (piecesCopy.find({i,j}) != piecesCopy.end() && piecesCopy[{i,j}].type == PieceType::King 
+          && piecesCopy[{i,j}].color == piece.color)
+      {
+        kingPos = {i, j};
+        found = true;
+      }
+  }
+  // Simulate all from the other color check if king is attacked
+  std::map<Position, Piece> pieces;
+
+  // Get all pieces from the board
+  for (int i = 0; i < 8; i ++)
+  {
+    for (int j = 0; j < 8; j ++)
+      if (piecesCopy.find({i,j}) != piecesCopy.end() && piecesCopy[{i,j}].color != piece.color)
+        pieces[{i, j}] =  piecesCopy[{i,j}];
+  }
+  
+  // Iterate over all pieces and try all the possible moves
+  Position newPos;
+  for (const auto & [pos, piece]: pieces)
+  {
+    switch (piece.type)
+    {
+      case PieceType::King:
+        for (const auto & dir: KING_MOVES)
+        {  
+          newPos = Position(pos.first + dir.first, pos.second + dir.second);
+          if (this -> isValidKingMove(piecesCopy, pos, newPos) && kingPos == newPos)
+            return true;
+        }
+        break;
+      
+      case PieceType::Rook:
+        for (const auto & dir: ROOK_MOVES)
+        {
+          for (int i = 0; i < 8; i++)
+          {
+            newPos = Position(pos.first + i * dir.first, pos.second + i * dir.second);
+            if (this -> isValidRookMove(piecesCopy, pos, newPos) && kingPos == newPos)
+              return true;
+          }
+        }
+        break;
+
+    }
+
+  }
+  return false;
+}
+
+
+/** Find all moves for white/black player */
+std::vector<std::pair<Position, Position>> Chess::findMoves(Color color)
+{
+  std::vector<std::pair<Position, Position>> moves; 
+  std::map<Position, Piece> pieces;
+
+  // Get all pieces from the board
+  for (int i = 0; i < 8; i ++)
+  {
+    for (int j = 0; j < 8; j ++)
+      if (m_pieces.find({i,j}) != m_pieces.end() && m_pieces[{i,j}].color == color)
+        pieces[{i, j}] =  m_pieces[{i,j}];
+  }
+  
+  // Iterate over all pieces and try all the possible moves
+  for (const auto & [pos, piece]: pieces)
+  {
+    switch (piece.type)
+    {
+      case PieceType::King:
+        for (const auto & dir: KING_MOVES)
+        {
+          if (isValidMove(pos, {pos.first + dir.first, pos.second + dir.second}))
+            moves.push_back({pos, {pos.first + dir.first, pos.second + dir.second}});
+        }
+        break;
+      
+      case PieceType::Rook:
+        for (const auto & dir: ROOK_MOVES)
+        {
+          for (int i = i; i < 8; i++)
+          {
+            if (isValidMove(pos, {pos.first + i * dir.first, pos.second + i  * dir.second}))
+              moves.push_back({pos, {pos.first + i * dir.first, pos.second + i * dir.second}});
+          }
+        }
+        break;
+    }
+
+  }
+
+  
+  return moves;
+}
+
+/** Validates move for pawn */
+// TODO en passant, upgrade
+bool Chess::isValidPawnMove(std::map<Position, Piece> pieces, Position pos1, Position pos2)
+{
+  Piece piece1 = pieces[pos1];
+  
+  // Validate moves for white pawns
+  if (piece1.color == Color::White)
+  {
+    // check one move up
+    if (pos1.first == pos2.first && pos1.second + 1 == pos2.second && pieces.find(pos2) == pieces.end())
+      return true;
+
+    // check two moves up if its the first move
+    if (pos1.first == pos2.first && pos1.second + 2 == pos2.second && pieces.find(pos2) == pieces.end() 
+        && pieces.find({pos1.first, pos1.second + 1}) == pieces.end() && pos1.second == 1)
+      return true;
+
+    // Check diagonal to left move
+    if (pos1.first - 1 == pos2.first && pos1.second + 1 == pos2.second && pieces.find(pos2) != pieces.end())
+      if (pieces[pos2].color == Color::Black)
+        return true;
+    
+    // Check diagonal to right move
+    if (pos1.first + 1 == pos2.first && pos1.second + 1 == pos2.second && pieces.find(pos2) != pieces.end())
+      if (pieces[pos2].color == Color::Black)
+        return true;
+  }
+   
+  // Validate moves for black pawns
   else
-    m_pieces = this -> setupBlack();
+  {
+    // check one move up
+    if (pos1.first == pos2.first && pos1.second - 1 == pos2.second && pieces.find(pos2) == pieces.end())
+      return true;
+
+    // check two moves up if its the first move
+    if (pos1.first == pos2.first && pos1.second - 2 == pos2.second && pieces.find(pos2) == pieces.end() 
+        && pieces.find({pos1.first, pos1.second - 1}) == pieces.end() && pos1.second == 6)
+      return true;
+
+    // Check diagonal to left move
+    if (pos1.first - 1 == pos2.first && pos1.second - 1 == pos2.second && pieces.find(pos2) != pieces.end())
+      if (pieces[pos2].color == Color::Black)
+        return true;
+    
+    // Check diagonal to right move
+    if (pos1.first + 1 == pos2.first && pos1.second - 1 == pos2.second && pieces.find(pos2) != pieces.end())
+      if (pieces[pos2].color == Color::Black)
+        return true;
+  }
+  
+  return false;
+}
+
+/** Validates move for king */
+// TODO Castling
+bool Chess::isValidKingMove(std::map<Position, Piece> pieces, Position pos1, Position pos2)
+{
+  if (std::abs(pos1.first - pos2.first) <= 1 && std::abs(pos1.second - pos2.second) <= 1)
+  {
+    //Checks if position is empty or if oposing color is at that position
+    if (pieces.find(pos2) == pieces.end())
+      return true;
+
+    if (pieces[pos1].color != pieces[pos2].color)
+      return true;
+  }
+  return false;
+}
+
+/** Validates move for Rook */
+bool Chess::isValidRookMove(std::map<Position, Piece> pieces, Position pos1, Position pos2)
+{
+  // Check if the move is vertical
+  if (pos1.first == pos2.first)
+  {
+    // Check if there is clear path between the two postions
+    int step;
+    if (pos1.second > pos2.second)
+      step = -1;
+    else
+      step = 1;
+
+    for (int i = pos1.second + step; i < pos2.second; i += step)
+    {
+      if (pieces.find({pos1.first, i}) != pieces.end())
+        return false;
+    }
+  }
+ 
+  // Check if the move is horizontal
+  else if (pos1.second == pos2.second)
+  {
+    // Check if there is clear path between the two postions
+    int step;
+    if (pos1.first > pos2.first)
+      step = -1;
+    else
+      step = 1;
+
+    for (int i = pos1.first + step; i < pos2.first; i += step)
+    {
+      if (pieces.find({i, pos1.second}) != pieces.end())
+        return false;
+    }
+  }
+  
+  else
+    return false;
+
+  //Checks if position is empty or if oposing color is at that position
+  if (pieces.find(pos2) == pieces.end())
+    return true;
+
+  if (pieces[pos1].color != pieces[pos2].color)
+    return true;
+  
+  return false;
+}
+
+
+/** Checks if move is valid */
+bool Chess::isValidMove(Position pos1, Position pos2)
+{
+  /* Checks if the positions are not out of bounds of the board or if the positions are the same */
+  if (pos1.first < 0 || pos1.first > 7 || pos1.second < 0 || pos1.second > 7 || pos2.first < 0 || pos2.first > 7 ||
+      pos2.second < 0 || pos2.second > 7 || pos1 == pos2)
+    return false;
+
+  // Check if there is any piece at pos1
+  if (m_pieces.find(pos1) == m_pieces.end())
+    return false;
+
+  Piece piece1 = m_pieces[pos1];
+
+  // If the player that made the move is the one who is to move
+  if (piece1.color != m_toMove)
+    return false;
+  
+  // Check if the move does not put you in check
+  if (this -> isCheck(pos1, pos2))
+    return false;
+  
+  // Now check if the move is valid
+  switch (piece1.type)
+  {
+    case PieceType::Pawn:
+      return isValidPawnMove(m_pieces, pos1, pos2); 
+    
+    case PieceType::King:
+      return isValidKingMove(m_pieces, pos1, pos2);
+
+    case PieceType::Rook:
+      return isValidRookMove(m_pieces, pos1, pos2);
+  }
+  
+  return true;
+}
+
+/** Makes move: Pos1 (from), Pos2 (to) */
+// Why is this bool?
+bool Chess::makeMove(Position pos1, Position pos2)
+{
+  Piece piece = m_pieces[pos1];
+  m_pieces.erase(pos1);
+  m_pieces[pos2] = piece;
+
+  // Change whose turn it is
+  if (m_toMove == Color::White)
+    m_toMove = Color::Black;
+  else
+    m_toMove = Color::White;
+
+  return true;
 }
 
 /** Returns value (0 = white, 1 = black player */

@@ -28,7 +28,7 @@ void BoardVisualisation::processInput(sf::Event & event)
   /** Close window if ESC is pressed */
   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     m_window.close();
-
+  
   else if (event.type == sf::Event::MouseButtonPressed)
   {
     if (event.mouseButton.button == sf::Mouse::Left)
@@ -41,7 +41,7 @@ void BoardVisualisation::processInput(sf::Event & event)
       float YMouse = windowPos.y;
       
       // Check if any piece was clicked
-      for (const auto & [pos, piece]: m_pieces)
+      for (const auto & [pos, piece]: m_chess.getBoard())
       {
         size_t XPos = pos.first;
         size_t YPos = (7-pos.second);
@@ -71,32 +71,18 @@ void BoardVisualisation::processInput(sf::Event & event)
       float XMouse = windowPos.x;
       float YMouse = windowPos.y;
       
-      bool empty = true;
-      // Check if any piece was clicked
-      for (const auto & [pos, piece]: m_pieces)
+      Piece oldPiece = m_chess.getBoard()[m_holding];
+      int newX = (XMouse - LEFT_PADDING) / squareSize;
+      int newY = 8 - (YMouse - TOP_PADDING) / squareSize;
+      std::cout << newX << " " << newY << std::endl;
+      
+      // If placing square is indide the chess board
+      if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7)
       {
-        size_t XPos = pos.first;
-        size_t YPos = (7-pos.second);
-        float XSquare = LEFT_PADDING + XPos * squareSize;
-        float YSquare = TOP_PADDING + YPos * squareSize;
-        
-        // Check if mouse is inside the square
-        if (XMouse > XSquare && XMouse < XSquare + squareSize && YMouse > YSquare &&
-            YMouse < YSquare + squareSize)
+        // If valid move
+        if (m_chess.isValidMove(m_holding, {newX, newY}))
         {
-          empty = false;
-        }
-      }
-      if (empty)
-      {
-        Piece oldPiece = m_pieces[m_holding];
-        int newX = (XMouse - LEFT_PADDING) / squareSize;
-        int newY = 8 - (YMouse - TOP_PADDING) / squareSize;
-        std::cout << newX << " " << newY << std::endl;
-        if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7)
-        {
-          m_pieces.erase(m_holding);
-          m_pieces[{newX, newY}] = oldPiece;
+          m_chess.makeMove(m_holding, {newX, newY});
         }
       }
       m_holding.first = -1;
@@ -110,7 +96,7 @@ void BoardVisualisation::mainLoop(void)
   m_startTime = std::chrono::high_resolution_clock::now();
   unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
   float squareSize = (smallerWinSize - 75) / DIMENSION;
-
+  
   sf::Event event;
   sf::Clock clock;
   float currentStepTime = 0.0f;
@@ -128,14 +114,17 @@ void BoardVisualisation::mainLoop(void)
     // If currently holding
     if (m_holding.first != -1)
     {
+      // Displays hint
+      //TODO
+
       // Raw display coordinates
       sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
       
       // Window coordinates
       sf::Vector2f windowPos = m_window.mapPixelToCoords(mousePos);
       
-      // Displays the piece on the cursour (-squareSize to adjust from offset - displaying from top left corner, not middle)
-      this -> showPieceXY(m_pieces[m_holding], windowPos.x - squareSize / 2, windowPos.y - squareSize / 2);
+      // Displays the piece on the cursor (-squareSize to adjust from offset - displaying from top left corner, not middle)
+      this -> showPieceXY(m_chess.getBoard()[m_holding], windowPos.x - squareSize / 2, windowPos.y - squareSize / 2);
     }
     m_window.display();
 
@@ -156,10 +145,10 @@ std::shared_ptr<sf::Texture> BoardVisualisation::loadTexture(std::string filenam
   return texture;
 }
 
-/** Updates position of pieces on the board */
-void BoardVisualisation::updatePieces(std::map<Position, Piece> pieces)
+/** Displays hint on coordinates*/
+void showHint(size_t X, size_t Y)
 {
-  m_pieces = pieces;
+  
 }
 
 /** Shows piece on exact coordinates */
@@ -243,7 +232,7 @@ void BoardVisualisation::showPieces(void)
   unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
   float squareSize = (smallerWinSize - 75) / DIMENSION;
 
-  for (auto &[pos, piece]: m_pieces)
+  for (auto &[pos, piece]: m_chess.getBoard())
   {
     // Dont display the piece that is being held
     if (pos.first == m_holding.first && pos.second == m_holding.second)

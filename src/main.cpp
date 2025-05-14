@@ -32,11 +32,7 @@ int main (int argc, char ** argv)
 
   unsigned screenWidth = sf::VideoMode::getDesktopMode().width;
   unsigned screenHeight = sf::VideoMode::getDesktopMode().height;
-  BoardVisualisation board(screenWidth, screenHeight);
-  Chess chess(Color::White);
-
-  board.updatePieces(chess.getBoard());
-  std::cout << chess.value(Color::Black);
+  BoardVisualisation board(screenWidth, screenHeight); 
   /* Runs the main window loop*/
   board.mainLoop();
     

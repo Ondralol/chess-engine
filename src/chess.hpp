@@ -10,9 +10,19 @@
 #include <utility>
 #include <cstddef> 
 #include <map>
+#include <vector>
+#include <array>
 
 // Position on chess board
 using Position = std::pair<int, int>;
+
+constexpr std::array<Position, 8> KING_MOVES = {{
+  {-1,1}, {0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}
+}};
+
+constexpr std::array<Position, 4> ROOK_MOVES = {{
+  {1,0}, {-1,0}, {0,1}, {0,-1}
+}};
 
 enum class Color
 {
@@ -36,24 +46,43 @@ struct Piece
   PieceType type;
 };
 
+
+/* White player is the botom player in this representation, position (0,0) represents bottom left corner of the board */
+/* First coordinate represents X Axis, second coordinate represents Y Axis */
+
 class Chess
 {
   public:
     
-    /** Constructor - 1 = white is botton player, 0 = black is bottom player */
-    Chess(Color color);
+    /** Constructor  white is botton player, black is bottom player */
+    Chess();
     
     /** Sets up default position for white player being at bottom */
-    static std::map<Position, Piece> setupWhite(void);
+    static std::map<Position, Piece> setup(void);
     
-    /** Sets up default position for black player being at bottom */
-    static std::map<Position, Piece> setupBlack(void);
+    /** Simple board setup (for showcase and testing */
+    static std::map<Position, Piece> simpleSetup(void);
 
     /** Returns current state of board */
     std::map<Position, Piece> getBoard(void) {return m_pieces;};
     
+    /** Check if the move does not put your own king at check */
+    bool isCheck(Position pos1, Position pos2);
+    
+    /** Find all moves for white/black player */
+    std::vector<std::pair<Position, Position>> findMoves(Color color);
+    
+    /** Validates move for pawn */
+    static bool isValidPawnMove(std::map<Position, Piece> pieces, Position pos1, Position pos2);
+  
+    /** Validates move for king */
+    static bool isValidKingMove(std::map<Position, Piece> pieces, Position pos1, Position pos2);
+  
+    /** Validates move for Rook */
+    static bool isValidRookMove(std::map<Position, Piece> pieces, Position pos1, Position pos2);
+
     /** Checks if move is valid */
-    bool isValidMove(Position pos1, Position pos2, Piece piece1, Piece piece2);
+    bool isValidMove(Position pos1, Position pos2);
 
     /** Makes move: Pos1 (from), Pos2 (to) */
     bool makeMove(Position pos1, Position pos2);
@@ -66,9 +95,6 @@ class Chess
     // Current state of the board                                                                                             
     std::map<Position, Piece> m_pieces;
  
-    // If white player is on the botton
-    Color m_bottomPlayer;
-    
     // Who is to move
     Color m_toMove;
 };

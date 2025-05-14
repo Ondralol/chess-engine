@@ -22,8 +22,8 @@
 
 #define TOP_PADDING_TEXT 20.0f
 #define LEFT_PADDING_TEXT 15.0f
-#define TOP_PADDING 65.0f
-#define LEFT_PADDING 15.0f
+#define TOP_PADDING 75.0f
+#define LEFT_PADDING 50.0f
 #define TOP_PADDING_GRAPH 450.0f
 #define LEFT_PADDING_GRAPH 15.0f
 #define GRAPH_SIZE_X 450.0f
@@ -33,7 +33,8 @@ class BoardVisualisation
 {
 public:
   BoardVisualisation(unsigned screenWidth, unsigned screenHeight)
-    : m_window(sf::RenderWindow (sf::VideoMode({screenWidth, screenHeight}), "Chess Engine"))
+    : m_window (sf::RenderWindow (sf::VideoMode({screenWidth, screenHeight}), "Chess Engine")),
+     m_chess ()
   {
     m_window.setFramerateLimit(60);
     m_font.loadFromFile("assets/open_sans");
@@ -48,9 +49,9 @@ public:
   /** Loads texture from cache/file */
   std::shared_ptr<sf::Texture> loadTexture(std::string filename);
   
-  /** Updates position of pieces on the board */
-  void updatePieces(std::map<Position, Piece> pieces);
-  
+  /** Displays hint on coordinates*/
+  void showHint(size_t X, size_t Y);
+
   /** Shows piece on exact coordinates */
   void showPieceXY(Piece piece, size_t X, size_t Y);
 
@@ -59,14 +60,19 @@ public:
 
   /** Displays the whole chess board */
   void showBoard(void);
+  
+  /** Flips the board */
+  void flipBoard(void); // will need to inverse the holding and dragging as well as all the pieces
 
 private:
   // Main window
   sf::RenderWindow m_window;
   
-  // Current pieces
-  std::map<Position, Piece> m_pieces;
-  
+  Chess m_chess;
+
+  // Which color is on the bottom
+  Color m_bottomPlayer;
+
   // Currently holding piece - (-1, -1) means that no piece is being held
   Position m_holding = {-1, -1};
 
