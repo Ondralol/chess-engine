@@ -17,7 +17,7 @@
 using Position = std::pair<int, int>;
 
 constexpr std::array<Position, 8> KING_MOVES = {{
-  {-1,1}, {0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}
+  {-1,1}, {0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}
 }};
 
 constexpr std::array<Position, 4> ROOK_MOVES = {{
@@ -69,8 +69,8 @@ class Chess
     /** Check if the move does not put your own king at check */
     bool isCheck(Position pos1, Position pos2);
     
-    /** Find all moves for white/black player */
-    std::vector<std::pair<Position, Position>> findMoves(Color color);
+    /** Find all moves for current colour */
+    std::vector<std::pair<Position, Position>> findMoves();
     
     /** Validates move for pawn */
     static bool isValidPawnMove(std::map<Position, Piece> pieces, Position pos1, Position pos2);
@@ -87,9 +87,12 @@ class Chess
     /** Makes move: Pos1 (from), Pos2 (to) */
     bool makeMove(Position pos1, Position pos2);
     
-    /** Returns value (1 = white, 0 = black player */
-    size_t value(Color color);
+    /** Returns color of player that is about to move */
+    Color toMove();
 
+    /** Returns value (1 = white, 0 = black player */
+    size_t evaluate(Color color);
+    
   private:
     
     // Current state of the board                                                                                             

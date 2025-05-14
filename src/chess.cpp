@@ -98,6 +98,9 @@ std::map<Position, Piece> Chess::simpleSetup()
   piece.type = PieceType::King;
   pieces[{5,6}] = piece;
   
+  piece.type = PieceType::Rook;
+  pieces[{6,6}] = piece;
+
   return pieces;
 }
 
@@ -179,7 +182,7 @@ bool Chess::isCheck(Position pos1, Position pos2)
 
 
 /** Find all moves for white/black player */
-std::vector<std::pair<Position, Position>> Chess::findMoves(Color color)
+std::vector<std::pair<Position, Position>> Chess::findMoves()
 {
   std::vector<std::pair<Position, Position>> moves; 
   std::map<Position, Piece> pieces;
@@ -188,11 +191,12 @@ std::vector<std::pair<Position, Position>> Chess::findMoves(Color color)
   for (int i = 0; i < 8; i ++)
   {
     for (int j = 0; j < 8; j ++)
-      if (m_pieces.find({i,j}) != m_pieces.end() && m_pieces[{i,j}].color == color)
+      if (m_pieces.find({i,j}) != m_pieces.end() && m_pieces[{i,j}].color == m_toMove)
         pieces[{i, j}] =  m_pieces[{i,j}];
   }
   
   // Iterate over all pieces and try all the possible moves
+  Position newPos;
   for (const auto & [pos, piece]: pieces)
   {
     switch (piece.type)
@@ -200,26 +204,26 @@ std::vector<std::pair<Position, Position>> Chess::findMoves(Color color)
       case PieceType::King:
         for (const auto & dir: KING_MOVES)
         {
-          if (isValidMove(pos, {pos.first + dir.first, pos.second + dir.second}))
-            moves.push_back({pos, {pos.first + dir.first, pos.second + dir.second}});
+          newPos = Position(pos.first + dir.first, pos.second + dir.second);
+          if (!(this -> isCheck(pos, newPos)) && isValidMove(pos, newPos))
+            moves.push_back({pos, newPos});
         }
         break;
       
       case PieceType::Rook:
         for (const auto & dir: ROOK_MOVES)
         {
-          for (int i = i; i < 8; i++)
+          for (int i = 0; i < 8; i++)
           {
-            if (isValidMove(pos, {pos.first + i * dir.first, pos.second + i  * dir.second}))
-              moves.push_back({pos, {pos.first + i * dir.first, pos.second + i * dir.second}});
+            newPos = Position(pos.first + i * dir.first, pos.second + i  * dir.second);
+            if (!(this -> isCheck(pos, newPos)) && isValidMove(pos, newPos))
+              moves.push_back({pos, newPos});
           }
         }
         break;
     }
 
   }
-
-  
   return moves;
 }
 
@@ -387,6 +391,7 @@ bool Chess::isValidMove(Position pos1, Position pos2)
 // Why is this bool?
 bool Chess::makeMove(Position pos1, Position pos2)
 {
+  std::cout << "From : " << pos1.first << " " << pos1.second << ", To: " << pos2.first << " " << pos2.second << std::endl;
   Piece piece = m_pieces[pos1];
   m_pieces.erase(pos1);
   m_pieces[pos2] = piece;
@@ -396,17 +401,24 @@ bool Chess::makeMove(Position pos1, Position pos2)
     m_toMove = Color::Black;
   else
     m_toMove = Color::White;
-
+  
+  std::cout << m_pieces.size() << std::endl;
   return true;
 }
 
+/** Returns color of player that is about to move */
+Color Chess::toMove()
+{
+  return m_toMove;
+}
+
 /** Returns value (0 = white, 1 = black player */
-size_t Chess::value(Color color)
+size_t Chess::evaluate(Color color)
 {
   size_t value = 0;
   for (const auto & [pos, piece]: m_pieces)
   {
-    if (piece.color == color || piece.color == color)
+    if (piece.color == color)
     {
       switch (piece.type)
       {
@@ -428,7 +440,11 @@ size_t Chess::value(Color color)
 
          case PieceType::Queen:
           value += 9;
-          break; 
+          break;
+          
+         case PieceType::King:
+          value += 99999;
+          break;
       }
     }
   }

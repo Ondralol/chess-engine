@@ -1,0 +1,9 @@
+<map id="src/chess.hpp" name="src/chess.hpp">
+<area shape="rect" id="node1" title="Chess board representation." alt="" coords="223,5,334,32"/>
+<area shape="rect" id="node2" href="$boardVisualisation_8hpp.html" title="Class that visualises the chess board." alt="" coords="5,80,200,107"/>
+<area shape="rect" id="node5" href="$chess_8cpp.html" title="Chess board representation." alt="" coords="224,80,333,107"/>
+<area shape="rect" id="node6" href="$engine_8hpp.html" title="Chess engine class." alt="" coords="357,80,475,107"/>
+<area shape="rect" id="node3" href="$boardVisualisation_8cpp.html" title="Class that visualises the chess board." alt="" coords="161,155,354,181"/>
+<area shape="rect" id="node4" href="$main_8cpp.html" title="Main function that parses input arguments and calls other functions/methods." alt="" coords="31,155,137,181"/>
+<area shape="rect" id="node7" href="$engine_8cpp.html" title="Chess engine class." alt="" coords="378,155,494,181"/>
+</map>

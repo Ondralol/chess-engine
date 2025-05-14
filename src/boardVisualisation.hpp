@@ -49,8 +49,8 @@ public:
   /** Loads texture from cache/file */
   std::shared_ptr<sf::Texture> loadTexture(std::string filename);
   
-  /** Displays hint on coordinates*/
-  void showHint(size_t X, size_t Y);
+  /** Displays hint on board*/
+  void showHint(Position pos);
 
   /** Shows piece on exact coordinates */
   void showPieceXY(Piece piece, size_t X, size_t Y);

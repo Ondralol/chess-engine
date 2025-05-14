@@ -6,6 +6,7 @@
 */
 
 #include "boardVisualisation.hpp"
+#include "engine.hpp"
 
 #include <memory>
 #include <string>
@@ -13,7 +14,9 @@
 #include <thread>
 #include <sstream>
 #include <functional>
-
+#include <mutex>
+#include <thread>
+#include <atomic>
 
 /** Processes all user input */
 void BoardVisualisation::processInput(sf::Event & event)
@@ -74,7 +77,7 @@ void BoardVisualisation::processInput(sf::Event & event)
       Piece oldPiece = m_chess.getBoard()[m_holding];
       int newX = (XMouse - LEFT_PADDING) / squareSize;
       int newY = 8 - (YMouse - TOP_PADDING) / squareSize;
-      std::cout << newX << " " << newY << std::endl;
+      //std::cout << newX << " " << newY << std::endl;
       
       // If placing square is indide the chess board
       if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7)
@@ -96,6 +99,10 @@ void BoardVisualisation::mainLoop(void)
   m_startTime = std::chrono::high_resolution_clock::now();
   unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
   float squareSize = (smallerWinSize - 75) / DIMENSION;
+  Engine engine;
+
+  // To hold the future result
+  std::future<std::pair<Position, Position>> bestMoveFuture;
   
   sf::Event event;
   sf::Clock clock;
@@ -110,12 +117,29 @@ void BoardVisualisation::mainLoop(void)
     m_window.clear(sf::Color(39,36,33,255));
     
     showBoard();
-    
+
+    // If black plays, let AI make move
+    if (m_chess.toMove() == Color::White)
+    {
+      //std::thread thr(FindBestMove, &engine, std::ref(m_chess), 5);
+      auto move = engine.findBestMove(m_chess, 1);
+      std::cout << "Making move" << std::endl;
+      if (move.first != Position(-1, -1) && move.second != Position(-1, -1))
+        m_chess.makeMove(move.first, move.second);
+      else
+        std::cout << "No possible moves" << std::endl;
+    }
+  
     // If currently holding
     if (m_holding.first != -1)
     {
       // Displays hint
-      //TODO
+      std::vector<std::pair<Position, Position>> moves = m_chess.findMoves();
+      for (const auto & move: moves)
+      {
+        if (move.first == m_holding)
+          showHint(move.second);
+      }
 
       // Raw display coordinates
       sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
@@ -145,10 +169,20 @@ std::shared_ptr<sf::Texture> BoardVisualisation::loadTexture(std::string filenam
   return texture;
 }
 
-/** Displays hint on coordinates*/
-void showHint(size_t X, size_t Y)
+/** Displays hint on board*/
+void BoardVisualisation::showHint(Position pos)
 {
-  
+  unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
+  float squareSize = (smallerWinSize - 75) / DIMENSION;
+  size_t XPos = pos.first;
+  size_t YPos = (7-pos.second);
+  sf::CircleShape dot(squareSize * 0.2f); // 20% of the square
+  dot.setFillColor(sf::Color(173, 216, 230, 120)); // Red with alpha transparency
+  dot.setOrigin(dot.getRadius(), dot.getRadius()); // center origin
+  dot.setPosition(LEFT_PADDING + XPos * squareSize + squareSize / 2,
+                  TOP_PADDING + YPos * squareSize + squareSize / 2);
+
+  m_window.draw(dot);
 }
 
 /** Shows piece on exact coordinates */
