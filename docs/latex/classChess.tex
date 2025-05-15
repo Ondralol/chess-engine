@@ -1,15 +1,15 @@
-\hypertarget{classChess}{}\doxysection{Chess Class Reference}
-\label{classChess}\index{Chess@{Chess}}
+\doxysection{Chess Class Reference}
+\hypertarget{classChess}{}\label{classChess}\index{Chess@{Chess}}
 
 
 {\ttfamily \#include $<$chess.\+hpp$>$}
 
-\doxysubsection*{Public Member Functions}
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classChess_a8b493f742d0ceced6f853fa30d3c05a8}{Chess}} ()
 \item 
-std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \mbox{\hyperlink{classChess_ac3f90fe4f11ed19dda43b6a4c04917e4}{get\+Board}} (void)
+std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \mbox{\hyperlink{classChess_a3f0cba4ff998040f2f7b5afed7e1c48e}{get\+Board}} (void)
 \item 
 bool \mbox{\hyperlink{classChess_a3ac627bf7eff54056d681a96b3bbc474}{is\+Check}} (\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
 \item 
@@ -31,7 +31,7 @@ void \mbox{\hyperlink{classChess_a696ee05988698bda56959858045b5816}{undo}} (void
 \item 
 \mbox{\hyperlink{structMove}{Move}} \mbox{\hyperlink{classChess_a9b35ecb9d727df85e2b2465b31902e6d}{last\+Move}} (void)
 \end{DoxyCompactItemize}
-\doxysubsection*{Static Public Member Functions}
+\doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 static std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \mbox{\hyperlink{classChess_ac722c84f171c1b3febade253645f8a7b}{setup}} (void)
@@ -47,7 +47,7 @@ static bool \mbox{\hyperlink{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}{is\+V
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classChess_a8b493f742d0ceced6f853fa30d3c05a8}\label{classChess_a8b493f742d0ceced6f853fa30d3c05a8}} 
+\Hypertarget{classChess_a8b493f742d0ceced6f853fa30d3c05a8}\label{classChess_a8b493f742d0ceced6f853fa30d3c05a8} 
 \index{Chess@{Chess}!Chess@{Chess}}
 \index{Chess@{Chess}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{Chess()}{Chess()}}
@@ -56,7 +56,7 @@ static bool \mbox{\hyperlink{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}{is\+V
 Constructor white is botton player, black is bottom player 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classChess_aa97302ddda37e2a3f5d6ebb2d5d0b5fc}\label{classChess_aa97302ddda37e2a3f5d6ebb2d5d0b5fc}} 
+\Hypertarget{classChess_aa97302ddda37e2a3f5d6ebb2d5d0b5fc}\label{classChess_aa97302ddda37e2a3f5d6ebb2d5d0b5fc} 
 \index{Chess@{Chess}!evaluate@{evaluate}}
 \index{evaluate@{evaluate}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
@@ -64,13 +64,13 @@ Constructor white is botton player, black is bottom player
 
 Returns value (1 = white, 0 = black player
 
-Returns value (0 = white, 1 = black player \mbox{\Hypertarget{classChess_aad507eb2e72278cb023f46255f72f67e}\label{classChess_aad507eb2e72278cb023f46255f72f67e}} 
+Returns value (0 = white, 1 = black player \Hypertarget{classChess_aad507eb2e72278cb023f46255f72f67e}\label{classChess_aad507eb2e72278cb023f46255f72f67e} 
 \index{Chess@{Chess}!fastEval@{fastEval}}
 \index{fastEval@{fastEval}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{fastEval()}{fastEval()}}
 {\footnotesize\ttfamily int Chess\+::fast\+Eval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-Returns white -\/ black evaluation \mbox{\Hypertarget{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}\label{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}} 
+Returns white -\/ black evaluation \Hypertarget{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}\label{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a} 
 \index{Chess@{Chess}!findMoves@{findMoves}}
 \index{findMoves@{findMoves}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{findMoves()}{findMoves()}}
@@ -78,13 +78,13 @@ Returns white -\/ black evaluation \mbox{\Hypertarget{classChess_a36b8a0504b1dc2
 
 Find all moves for current colour
 
-Find all moves for white/black player \mbox{\Hypertarget{classChess_ac3f90fe4f11ed19dda43b6a4c04917e4}\label{classChess_ac3f90fe4f11ed19dda43b6a4c04917e4}} 
+Find all moves for white/black player \Hypertarget{classChess_a3f0cba4ff998040f2f7b5afed7e1c48e}\label{classChess_a3f0cba4ff998040f2f7b5afed7e1c48e} 
 \index{Chess@{Chess}!getBoard@{getBoard}}
 \index{getBoard@{getBoard}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{getBoard()}{getBoard()}}
-{\footnotesize\ttfamily std\+::map$<$\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}}$>$ Chess\+::get\+Board (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ Chess\+::get\+Board (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-Returns current state of board \mbox{\Hypertarget{classChess_a3ac627bf7eff54056d681a96b3bbc474}\label{classChess_a3ac627bf7eff54056d681a96b3bbc474}} 
+Returns current state of board \Hypertarget{classChess_a3ac627bf7eff54056d681a96b3bbc474}\label{classChess_a3ac627bf7eff54056d681a96b3bbc474} 
 \index{Chess@{Chess}!isCheck@{isCheck}}
 \index{isCheck@{isCheck}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isCheck()}{isCheck()}}
@@ -92,67 +92,67 @@ Returns current state of board \mbox{\Hypertarget{classChess_a3ac627bf7eff54056d
 
 Check if the move does not put your own king at check
 
-Check if the move does not put your own king at check, expects valid move on input \mbox{\Hypertarget{classChess_ad20dad3cfaa66803cd3b8f5452e84358}\label{classChess_ad20dad3cfaa66803cd3b8f5452e84358}} 
+Check if the move does not put your own king at check, expects valid move on input \Hypertarget{classChess_ad20dad3cfaa66803cd3b8f5452e84358}\label{classChess_ad20dad3cfaa66803cd3b8f5452e84358} 
 \index{Chess@{Chess}!isChecking@{isChecking}}
 \index{isChecking@{isChecking}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isChecking()}{isChecking()}}
 {\footnotesize\ttfamily bool Chess\+::is\+Checking (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-Check if the move checks other king \mbox{\Hypertarget{classChess_a960d62e7581ce492f28b03f4a4b49a82}\label{classChess_a960d62e7581ce492f28b03f4a4b49a82}} 
+Check if the move checks other king \Hypertarget{classChess_a960d62e7581ce492f28b03f4a4b49a82}\label{classChess_a960d62e7581ce492f28b03f4a4b49a82} 
 \index{Chess@{Chess}!isValidKingMove@{isValidKingMove}}
 \index{isValidKingMove@{isValidKingMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidKingMove()}{isValidKingMove()}}
 {\footnotesize\ttfamily bool Chess\+::is\+Valid\+King\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Validates move for king \mbox{\Hypertarget{classChess_a5c3e9abd6ce64b878629a8a68abbfe80}\label{classChess_a5c3e9abd6ce64b878629a8a68abbfe80}} 
+Validates move for king \Hypertarget{classChess_a5c3e9abd6ce64b878629a8a68abbfe80}\label{classChess_a5c3e9abd6ce64b878629a8a68abbfe80} 
 \index{Chess@{Chess}!isValidMove@{isValidMove}}
 \index{isValidMove@{isValidMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidMove()}{isValidMove()}}
 {\footnotesize\ttfamily bool Chess\+::is\+Valid\+Move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})}
 
-Checks if move is valid \mbox{\Hypertarget{classChess_a6991477726495aff55dec09b54f7391a}\label{classChess_a6991477726495aff55dec09b54f7391a}} 
+Checks if move is valid \Hypertarget{classChess_a6991477726495aff55dec09b54f7391a}\label{classChess_a6991477726495aff55dec09b54f7391a} 
 \index{Chess@{Chess}!isValidPawnMove@{isValidPawnMove}}
 \index{isValidPawnMove@{isValidPawnMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidPawnMove()}{isValidPawnMove()}}
 {\footnotesize\ttfamily bool Chess\+::is\+Valid\+Pawn\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Validates move for pawn \mbox{\Hypertarget{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}\label{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}} 
+Validates move for pawn \Hypertarget{classChess_a5738ed9b63fcd1bb80a22d63293cf44a}\label{classChess_a5738ed9b63fcd1bb80a22d63293cf44a} 
 \index{Chess@{Chess}!isValidRookMove@{isValidRookMove}}
 \index{isValidRookMove@{isValidRookMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidRookMove()}{isValidRookMove()}}
 {\footnotesize\ttfamily bool Chess\+::is\+Valid\+Rook\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Validates move for Rook \mbox{\Hypertarget{classChess_a9b35ecb9d727df85e2b2465b31902e6d}\label{classChess_a9b35ecb9d727df85e2b2465b31902e6d}} 
+Validates move for Rook \Hypertarget{classChess_a9b35ecb9d727df85e2b2465b31902e6d}\label{classChess_a9b35ecb9d727df85e2b2465b31902e6d} 
 \index{Chess@{Chess}!lastMove@{lastMove}}
 \index{lastMove@{lastMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{lastMove()}{lastMove()}}
 {\footnotesize\ttfamily \mbox{\hyperlink{structMove}{Move}} Chess\+::last\+Move (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-Returns last move \mbox{\Hypertarget{classChess_ad073a7fff8ca060d49df67aa7810a684}\label{classChess_ad073a7fff8ca060d49df67aa7810a684}} 
+Returns last move \Hypertarget{classChess_ad073a7fff8ca060d49df67aa7810a684}\label{classChess_ad073a7fff8ca060d49df67aa7810a684} 
 \index{Chess@{Chess}!makeMove@{makeMove}}
 \index{makeMove@{makeMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{makeMove()}{makeMove()}}
 {\footnotesize\ttfamily bool Chess\+::make\+Move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})}
 
-Makes move\+: Pos1 (from), Pos2 (to) \mbox{\Hypertarget{classChess_ac722c84f171c1b3febade253645f8a7b}\label{classChess_ac722c84f171c1b3febade253645f8a7b}} 
+Makes move\+: Pos1 (from), Pos2 (to) \Hypertarget{classChess_ac722c84f171c1b3febade253645f8a7b}\label{classChess_ac722c84f171c1b3febade253645f8a7b} 
 \index{Chess@{Chess}!setup@{setup}}
 \index{setup@{setup}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{setup()}{setup()}}
 {\footnotesize\ttfamily std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ Chess\+::setup (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Sets up default position for white player being at bottom \mbox{\Hypertarget{classChess_ae5ba00e667689ec0da0318f8f768d7ad}\label{classChess_ae5ba00e667689ec0da0318f8f768d7ad}} 
+Sets up default position for white player being at bottom \Hypertarget{classChess_ae5ba00e667689ec0da0318f8f768d7ad}\label{classChess_ae5ba00e667689ec0da0318f8f768d7ad} 
 \index{Chess@{Chess}!simpleSetup@{simpleSetup}}
 \index{simpleSetup@{simpleSetup}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{simpleSetup()}{simpleSetup()}}
 {\footnotesize\ttfamily std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ Chess\+::simple\+Setup (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Simple board setup (for showcase and testing \mbox{\Hypertarget{classChess_a021042797226bdbcf2ed5183bb9a3962}\label{classChess_a021042797226bdbcf2ed5183bb9a3962}} 
+Simple board setup (for showcase and testing \Hypertarget{classChess_a021042797226bdbcf2ed5183bb9a3962}\label{classChess_a021042797226bdbcf2ed5183bb9a3962} 
 \index{Chess@{Chess}!toMove@{toMove}}
 \index{toMove@{toMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{toMove()}{toMove()}}
 {\footnotesize\ttfamily \mbox{\hyperlink{chess_8hpp_ab87bacfdad76e61b9412d7124be44c1c}{Color}} Chess\+::to\+Move (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
-Returns color of player that is about to move \mbox{\Hypertarget{classChess_a696ee05988698bda56959858045b5816}\label{classChess_a696ee05988698bda56959858045b5816}} 
+Returns color of player that is about to move \Hypertarget{classChess_a696ee05988698bda56959858045b5816}\label{classChess_a696ee05988698bda56959858045b5816} 
 \index{Chess@{Chess}!undo@{undo}}
 \index{undo@{undo}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{undo()}{undo()}}

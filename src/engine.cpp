@@ -49,7 +49,7 @@ int Engine::minimax(Chess & game, int depth, int alpha, int beta, bool maximizin
   if (depth == 0)
   {  
     int res = game.fastEval();
-    return res;
+    //return res;
     if (maximizingPlayer && game.isChecking())
       res -= 3;
     else

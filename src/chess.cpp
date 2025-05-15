@@ -111,6 +111,7 @@ Chess::Chess()
 {
   //m_pieces = this -> setup();
   m_pieces = this -> simpleSetup();
+  m_toMove = Color::White;
 }
 
 
@@ -287,6 +288,7 @@ std::vector<std::pair<Position, Position>> Chess::findMoves()
     }
 
   }
+  //std::cout << moves.size() << std::endl;
   return moves;
 }
 

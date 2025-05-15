@@ -1,7 +1,7 @@
 CC=g++
 LD=$(CC)
 
-CFLAGS =-std=c++20 -Wall -pedantic -lpthread -g -O3
+CFLAGS =-std=c++20 -Wall -pedantic -fsanitize=undefined -fsanitize=address -lpthread -g -O3
 
 SOURCE=src
 
