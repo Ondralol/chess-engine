@@ -48,7 +48,7 @@ void BoardVisualisation::processInput(sf::Event & event)
       for (const auto & [pos, piece]: m_chess.getBoard())
       {
         size_t XPos = pos.first;
-        size_t YPos = (7-pos.second);
+        size_t YPos = (DIMENSION - 1 -pos.second);
         float XSquare = LEFT_PADDING + XPos * squareSize;
         float YSquare = TOP_PADDING + YPos * squareSize;
         
@@ -77,11 +77,11 @@ void BoardVisualisation::processInput(sf::Event & event)
       
       Piece oldPiece = m_chess.getBoard()[m_holding];
       int newX = (XMouse - LEFT_PADDING) / squareSize;
-      int newY = 8 - (YMouse - TOP_PADDING) / squareSize;
+      int newY = DIMENSION - (YMouse - TOP_PADDING) / squareSize;
       //std::cout << newX << " " << newY << std::endl;
       
       // If placing square is indide the chess board
-      if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7)
+      if (newX >= 0 && newX <= DIMENSION - 1 && newY >= 0 && newY <= DIMENSION - 1)
       {
         // If valid move
         if (m_chess.isValidMove(m_holding, {newX, newY}))
@@ -118,7 +118,7 @@ void BoardVisualisation::mainLoop(void)
     m_window.clear(sf::Color(39,36,33,255));
     
     showBoard();
-    
+     
     // If black plays, let AI make move
     if (m_chess.toMove() == Color::White)
     {
@@ -126,7 +126,7 @@ void BoardVisualisation::mainLoop(void)
       {
         std::cout << "Making move (AI - White)..." << std::endl;
         // Launch findBestMove in a separate thread
-        bestMoveFuture = std::async(std::launch::async, &Engine::findBestMove, &engine, std::ref(m_chess), 6);
+        bestMoveFuture = std::async(std::launch::async, &Engine::findBestMove, &engine, std::ref(m_chess), 8);
       }
       else
       {
@@ -203,7 +203,7 @@ void BoardVisualisation::showHint(Position pos)
   unsigned int smallerWinSize = std::min(m_window.getSize().x, m_window.getSize().y);
   float squareSize = (smallerWinSize - 75) / DIMENSION;
   size_t XPos = pos.first;
-  size_t YPos = (7-pos.second);
+  size_t YPos = (DIMENSION - 1 -pos.second);
   sf::CircleShape dot(squareSize * 0.2f); // 20% of the square
   dot.setFillColor(sf::Color(173, 216, 230, 120)); // Red with alpha transparency
   dot.setOrigin(dot.getRadius(), dot.getRadius()); // center origin
@@ -301,7 +301,7 @@ void BoardVisualisation::showPieces(void)
       continue;
 
     size_t XPos = pos.first;
-    size_t YPos = (7-pos.second);
+    size_t YPos = (DIMENSION - 1 -pos.second);
     this -> showPieceXY(piece, LEFT_PADDING + XPos * squareSize, TOP_PADDING + YPos * squareSize);
   }
   

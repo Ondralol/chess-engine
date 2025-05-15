@@ -18,7 +18,7 @@
 #include <memory>
 #include <chrono>
 
-#define DIMENSION 8 // board size
+#define DIMENSION 5 // board size
 
 #define TOP_PADDING_TEXT 20.0f
 #define LEFT_PADDING_TEXT 15.0f

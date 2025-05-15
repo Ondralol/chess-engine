@@ -48,16 +48,28 @@ int Engine::minimax(Chess & game, int depth, int alpha, int beta, bool maximizin
 {
   if (depth == 0)
   {  
-    return game.fastEval();
+    int res = game.fastEval();
+    return res;
+    if (maximizingPlayer && game.isChecking())
+      res -= 3;
+    else
+      res += 3;
+    
+    return res;
   }
 
   std::vector<std::pair<Position, Position>> moves = game.findMoves();
   if (moves.empty())
   {
-    if (maximizingPlayer)
-      return INT_MIN + 1;
-    else
-      return INT_MAX - 1;
+    bool isChecking = game.isChecking();
+    //isChecking = true;
+    if (maximizingPlayer && isChecking)
+      return -10000;
+    else if (!maximizingPlayer && isChecking)
+      return +10000;
+    
+    // Stalemate
+    return 0;
   }
 
   if (maximizingPlayer)

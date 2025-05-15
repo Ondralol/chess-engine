@@ -17,7 +17,7 @@
 // Position on chess board
 using Position = std::pair<int, int>;
 
-#define BOARD_SIZE 8
+#define BOARD_SIZE 5
 
 constexpr std::array<Position, 8> KING_MOVES = {{
   {-1,1}, {0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}
@@ -81,6 +81,9 @@ class Chess
     /** Check if the move does not put your own king at check */
     bool isCheck(Position pos1, Position pos2);
     
+    /** Check if the move checks other king */
+    bool isChecking();
+
     /** Find all moves for current colour */
     std::vector<std::pair<Position, Position>> findMoves();
     
@@ -110,6 +113,12 @@ class Chess
     
     /** Undo the last move */
     void undo(void);
+
+    /** Returns last move */
+    Move lastMove(void)
+    {
+      return m_moveLog.top();
+    }
 
   private:
     

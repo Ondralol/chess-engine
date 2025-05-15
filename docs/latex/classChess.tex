@@ -13,6 +13,8 @@ std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Pos
 \item 
 bool \mbox{\hyperlink{classChess_a3ac627bf7eff54056d681a96b3bbc474}{is\+Check}} (\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
 \item 
+bool \mbox{\hyperlink{classChess_ad20dad3cfaa66803cd3b8f5452e84358}{is\+Checking}} ()
+\item 
 std\+::vector$<$ std\+::pair$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} $>$ $>$ \mbox{\hyperlink{classChess_a36b8a0504b1dc27e1ddaa30ab3b2a44a}{find\+Moves}} ()
 \item 
 bool \mbox{\hyperlink{classChess_a5c3e9abd6ce64b878629a8a68abbfe80}{is\+Valid\+Move}} (\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos1, \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}} pos2)
@@ -26,6 +28,8 @@ size\+\_\+t \mbox{\hyperlink{classChess_aa97302ddda37e2a3f5d6ebb2d5d0b5fc}{evalu
 int \mbox{\hyperlink{classChess_aad507eb2e72278cb023f46255f72f67e}{fast\+Eval}} ()
 \item 
 void \mbox{\hyperlink{classChess_a696ee05988698bda56959858045b5816}{undo}} (void)
+\item 
+\mbox{\hyperlink{structMove}{Move}} \mbox{\hyperlink{classChess_a9b35ecb9d727df85e2b2465b31902e6d}{last\+Move}} (void)
 \end{DoxyCompactItemize}
 \doxysubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -88,7 +92,13 @@ Returns current state of board \mbox{\Hypertarget{classChess_a3ac627bf7eff54056d
 
 Check if the move does not put your own king at check
 
-Check if the move does not put your own king at check, expects valid move on input \mbox{\Hypertarget{classChess_a960d62e7581ce492f28b03f4a4b49a82}\label{classChess_a960d62e7581ce492f28b03f4a4b49a82}} 
+Check if the move does not put your own king at check, expects valid move on input \mbox{\Hypertarget{classChess_ad20dad3cfaa66803cd3b8f5452e84358}\label{classChess_ad20dad3cfaa66803cd3b8f5452e84358}} 
+\index{Chess@{Chess}!isChecking@{isChecking}}
+\index{isChecking@{isChecking}!Chess@{Chess}}
+\doxysubsubsection{\texorpdfstring{isChecking()}{isChecking()}}
+{\footnotesize\ttfamily bool Chess\+::is\+Checking (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Check if the move checks other king \mbox{\Hypertarget{classChess_a960d62e7581ce492f28b03f4a4b49a82}\label{classChess_a960d62e7581ce492f28b03f4a4b49a82}} 
 \index{Chess@{Chess}!isValidKingMove@{isValidKingMove}}
 \index{isValidKingMove@{isValidKingMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{isValidKingMove()}{isValidKingMove()}}
@@ -112,7 +122,13 @@ Validates move for pawn \mbox{\Hypertarget{classChess_a5738ed9b63fcd1bb80a22d632
 \doxysubsubsection{\texorpdfstring{isValidRookMove()}{isValidRookMove()}}
 {\footnotesize\ttfamily bool Chess\+::is\+Valid\+Rook\+Move (\begin{DoxyParamCaption}\item[{std\+::map$<$ \mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}, \mbox{\hyperlink{structPiece}{Piece}} $>$ \&}]{pieces,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos1,  }\item[{\mbox{\hyperlink{chess_8hpp_a8faac095f04735496f9200893ebe93cf}{Position}}}]{pos2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-Validates move for Rook \mbox{\Hypertarget{classChess_ad073a7fff8ca060d49df67aa7810a684}\label{classChess_ad073a7fff8ca060d49df67aa7810a684}} 
+Validates move for Rook \mbox{\Hypertarget{classChess_a9b35ecb9d727df85e2b2465b31902e6d}\label{classChess_a9b35ecb9d727df85e2b2465b31902e6d}} 
+\index{Chess@{Chess}!lastMove@{lastMove}}
+\index{lastMove@{lastMove}!Chess@{Chess}}
+\doxysubsubsection{\texorpdfstring{lastMove()}{lastMove()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structMove}{Move}} Chess\+::last\+Move (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns last move \mbox{\Hypertarget{classChess_ad073a7fff8ca060d49df67aa7810a684}\label{classChess_ad073a7fff8ca060d49df67aa7810a684}} 
 \index{Chess@{Chess}!makeMove@{makeMove}}
 \index{makeMove@{makeMove}!Chess@{Chess}}
 \doxysubsubsection{\texorpdfstring{makeMove()}{makeMove()}}

@@ -89,19 +89,19 @@ std::map<Position, Piece> Chess::simpleSetup()
   
   piece.type = PieceType::King;
   piece.color = Color::White;
-  pieces[{4,0}] = piece;
+  pieces[{4,4}] = piece;
   piece.type = PieceType::Rook;
-  pieces[{3,1}] = piece;
-  pieces[{3,2}] = piece;
-  //pieces[{3,3}] = piece;
+  //pieces[{4,6}] = piece;
+  pieces[{4,3}] = piece;
+  pieces[{1,0}] = piece;
 
 
   piece.color = Color::Black;
   piece.type = PieceType::King;
-  pieces[{5,6}] = piece;
+  pieces[{3,1}] = piece;
   
   piece.type = PieceType::Rook;
-  pieces[{6,6}] = piece;
+  pieces[{3,2}] = piece;
 
   return pieces;
 }
@@ -128,9 +128,9 @@ bool Chess::isCheck(Position pos1, Position pos2)
   Position kingPos;
   bool found = false;
   // Find king position
-  for (int i = 0; i < 8 && !found; i ++)
+  for (int i = 0; i < BOARD_SIZE && !found; i ++)
   {
-    for (int j = 0; j < 8 && !found; j ++)
+    for (int j = 0; j < BOARD_SIZE && !found; j ++)
       if (piecesCopy.find({i,j}) != piecesCopy.end() && piecesCopy[{i,j}].type == PieceType::King 
           && piecesCopy[{i,j}].color == piece.color)
       {
@@ -142,9 +142,9 @@ bool Chess::isCheck(Position pos1, Position pos2)
   std::map<Position, Piece> pieces;
 
   // Get all pieces from the board
-  for (int i = 0; i < 8; i ++)
+  for (int i = 0; i < BOARD_SIZE; i ++)
   {
-    for (int j = 0; j < 8; j ++)
+    for (int j = 0; j < BOARD_SIZE; j ++)
       if (piecesCopy.find({i,j}) != piecesCopy.end() && piecesCopy[{i,j}].color != piece.color)
         pieces[{i, j}] =  piecesCopy[{i,j}];
   }
@@ -167,7 +167,7 @@ bool Chess::isCheck(Position pos1, Position pos2)
       case PieceType::Rook:
         for (const auto & dir: ROOK_MOVES)
         {
-          for (int i = 0; i < 8; i++)
+          for (int i = 1; i < 3; i++)
           {
             newPos = Position(pos.first + i * dir.first, pos.second + i * dir.second);
             if (this -> isValidRookMove(piecesCopy, pos, newPos) && kingPos == newPos)
@@ -182,6 +182,67 @@ bool Chess::isCheck(Position pos1, Position pos2)
   return false;
 }
 
+/* If current positiong is checking */
+bool Chess::isChecking()
+{
+  Position kingPos;
+  bool found = false;
+  // Find king position
+  for (int i = 0; i < BOARD_SIZE && !found; i ++)
+  {
+    for (int j = 0; j < BOARD_SIZE && !found; j ++)
+      if (m_pieces.find({i,j}) != m_pieces.end() && m_pieces[{i,j}].type == PieceType::King 
+          && m_pieces[{i,j}].color == m_toMove)
+      {
+        kingPos = {i, j};
+        found = true;
+      }
+  }
+  // Simulate all from the other color check if king is attacked
+  std::map<Position, Piece> pieces;
+
+  // Get all pieces from the board
+  for (int i = 0; i < BOARD_SIZE; i ++)
+  {
+    for (int j = 0; j < BOARD_SIZE; j ++)
+      if (m_pieces.find({i,j}) != m_pieces.end() && m_pieces[{i,j}].color != m_toMove)
+        pieces[{i, j}] =  m_pieces[{i,j}];
+  }
+  
+  // Iterate over all pieces and try all the possible moves
+  Position newPos;
+  for (const auto & [pos, piece]: pieces)
+  {
+    switch (piece.type)
+    {
+      case PieceType::King:
+        for (const auto & dir: KING_MOVES)
+        {  
+          newPos = Position(pos.first + dir.first, pos.second + dir.second);
+          if (this -> isValidKingMove(m_pieces, pos, newPos) && kingPos == newPos)
+            return true;
+        }
+        break;
+      
+      case PieceType::Rook:
+        for (const auto & dir: ROOK_MOVES)
+        {
+          for (int i = 1; i < 3; i++)
+          {
+            newPos = Position(pos.first + i * dir.first, pos.second + i * dir.second);
+            if (this -> isValidRookMove(m_pieces, pos, newPos) && kingPos == newPos)
+              return true;
+          }
+        }
+        break;
+
+    }
+
+  }
+  return false;
+}
+
+
 
 /** Find all moves for white/black player */
 std::vector<std::pair<Position, Position>> Chess::findMoves()
@@ -190,9 +251,9 @@ std::vector<std::pair<Position, Position>> Chess::findMoves()
   std::map<Position, Piece> pieces;
 
   // Get all pieces from the board
-  for (int i = 0; i < 8; i ++)
+  for (int i = 0; i < BOARD_SIZE; i ++)
   {
-    for (int j = 0; j < 8; j ++)
+    for (int j = 0; j < BOARD_SIZE; j ++)
       if (m_pieces.find({i,j}) != m_pieces.end() && m_pieces[{i,j}].color == m_toMove)
         pieces[{i, j}] =  m_pieces[{i,j}];
   }
@@ -215,7 +276,7 @@ std::vector<std::pair<Position, Position>> Chess::findMoves()
       case PieceType::Rook:
         for (const auto & dir: ROOK_MOVES)
         {
-          for (int i = 0; i < 8; i++)
+          for (int i = 1; i < 3; i++)
           {
             newPos = Position(pos.first + i * dir.first, pos.second + i  * dir.second);
             if (!(this -> isCheck(pos, newPos)) && isValidMove(pos, newPos))
@@ -355,8 +416,8 @@ bool Chess::isValidRookMove(std::map<Position, Piece> & pieces, Position pos1, P
 bool Chess::isValidMove(Position pos1, Position pos2)
 {
   /* Checks if the positions are not out of bounds of the board or if the positions are the same */
-  if (pos1.first < 0 || pos1.first > 7 || pos1.second < 0 || pos1.second > 7 || pos2.first < 0 || pos2.first > 7 ||
-      pos2.second < 0 || pos2.second > 7 || pos1 == pos2)
+  if (pos1.first < 0 || pos1.first > BOARD_SIZE - 1 || pos1.second < 0 || pos1.second > BOARD_SIZE - 1 || pos2.first < 0 || pos2.first > BOARD_SIZE - 1 ||
+      pos2.second < 0 || pos2.second > BOARD_SIZE - 1 || pos1 == pos2)
     return false;
 
   // Check if there is any piece at pos1
