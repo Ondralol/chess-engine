@@ -1,7 +1,0 @@
-<map id="src/boardVisualisation.hpp" name="src/boardVisualisation.hpp">
-<area shape="rect" id="Node000001" title="Class that visualises the chess board." alt="" coords="91,5,286,31"/>
-<area shape="rect" id="Node000002" href="$boardVisualisation_8cpp.html" title="Class that visualises the chess board." alt="" coords="5,79,199,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,41,118,81,114,76,163,37"/>
-<area shape="rect" id="Node000003" href="$main_8cpp.html" title="Main function that parses input arguments and calls other functions/methods." alt="" coords="223,79,328,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="215,37,263,76,259,81,211,41"/>
-</map>
