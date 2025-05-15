@@ -162,7 +162,7 @@ std::map<Position, Piece> Chess::simpleSetup3()
 Chess::Chess()
 {
   //m_pieces = this -> setup();
-  m_pieces = this -> simpleSetup2();
+  m_pieces = this -> simpleSetup3();
   m_toMove = Color::White;
 }
 
