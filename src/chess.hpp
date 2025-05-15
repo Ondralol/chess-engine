@@ -73,7 +73,13 @@ class Chess
     static std::map<Position, Piece> setup(void);
     
     /** Simple board setup (for showcase and testing */
-    static std::map<Position, Piece> simpleSetup(void);
+    static std::map<Position, Piece> simpleSetup1(void);
+
+    /** Simple board setup (for showcase and testing */
+    static std::map<Position, Piece> simpleSetup2(void);
+
+    /** Simple board setup (for showcase and testing */
+    static std::map<Position, Piece> simpleSetup3(void);
 
     /** Returns current state of board */
     std::map<Position, Piece> getBoard(void) {return m_pieces;};

@@ -82,7 +82,7 @@ std::map<Position, Piece> Chess::setup(void)
 }
 
 /** Simple board setup (for showcase and testing */
-std::map<Position, Piece> Chess::simpleSetup()
+std::map<Position, Piece> Chess::simpleSetup1()
 {
   std::map<Position, Piece> pieces;
   Piece piece;
@@ -107,10 +107,62 @@ std::map<Position, Piece> Chess::simpleSetup()
 }
 
 
+/** Simple board setup (for showcase and testing */
+std::map<Position, Piece> Chess::simpleSetup2()
+{
+  std::map<Position, Piece> pieces;
+  Piece piece;
+  
+  piece.type = PieceType::King;
+  piece.color = Color::White;
+  pieces[{4,4}] = piece;
+  piece.type = PieceType::Rook;
+  //pieces[{4,6}] = piece;
+  pieces[{4,3}] = piece;
+  pieces[{1,0}] = piece;
+  pieces[{4,0}] = piece;
+
+  piece.color = Color::Black;
+  piece.type = PieceType::King;
+  pieces[{3,1}] = piece;
+  
+  //piece.type = PieceType::Rook;
+  //pieces[{3,2}] = piece;
+
+  return pieces;
+}
+
+
+/** Simple board setup (for showcase and testing */
+std::map<Position, Piece> Chess::simpleSetup3()
+{
+  std::map<Position, Piece> pieces;
+  Piece piece;
+  
+  piece.type = PieceType::King;
+  piece.color = Color::White;
+  pieces[{4,4}] = piece;
+  piece.type = PieceType::Rook;
+  //pieces[{4,6}] = piece;
+  pieces[{4,3}] = piece;
+  //pieces[{1,0}] = piece;
+
+
+  piece.color = Color::Black;
+  piece.type = PieceType::King;
+  pieces[{3,1}] = piece;
+  
+  piece.type = PieceType::Rook;
+  pieces[{3,2}] = piece;
+
+  return pieces;
+}
+
+
 Chess::Chess()
 {
   //m_pieces = this -> setup();
-  m_pieces = this -> simpleSetup();
+  m_pieces = this -> simpleSetup2();
   m_toMove = Color::White;
 }
 
@@ -587,13 +639,13 @@ int Chess::fastEval()
         tmpVal += 0;
         break;
     }
-    
+     
     if (piece.color == Color::White)
       value += tmpVal;
     else
       value -= tmpVal;
   }
-
+  
   return value;
 }
 

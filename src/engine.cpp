@@ -46,30 +46,15 @@ std::pair<Position, Position> Engine::findBestMove(Chess game, int depth)
 /** Minimax algorithm to find the best move */
 int Engine::minimax(Chess & game, int depth, int alpha, int beta, bool maximizingPlayer)
 {
-  if (depth == 0)
-  {  
-    int res = game.fastEval();
-    //return res;
-    if (maximizingPlayer && game.isChecking())
-      res -= 3;
-    else
-      res += 3;
-    
-    return res;
-  }
-
   std::vector<std::pair<Position, Position>> moves = game.findMoves();
-  if (moves.empty())
+  if (depth == 0 || moves.empty())
   {
-    bool isChecking = game.isChecking();
-    //isChecking = true;
-    if (maximizingPlayer && isChecking)
-      return -10000;
-    else if (!maximizingPlayer && isChecking)
-      return +10000;
-    
-    // Stalemate
-    return 0;
+    if (game.isChecking())
+    {
+      return maximizingPlayer ? -10000 - depth : 10000 + depth;
+    }
+    int res = game.fastEval();
+    return res;
   }
 
   if (maximizingPlayer)
@@ -85,6 +70,7 @@ int Engine::minimax(Chess & game, int depth, int alpha, int beta, bool maximizin
       if (beta <= alpha)
         break;
     }
+    std::cout << "Eval at depth " << depth << ": " << maxEval << std::endl;
     return maxEval;
   }
   
@@ -101,6 +87,7 @@ int Engine::minimax(Chess & game, int depth, int alpha, int beta, bool maximizin
       if (beta <= alpha)
         break;
     }
+    std::cout << "Eval at depth " << depth << ": " << minEval << std::endl;
     return minEval;
   }
 
